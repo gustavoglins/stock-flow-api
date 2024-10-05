@@ -50,7 +50,7 @@ public class ProductServiceImpl implements ProductService {
     public ProductDTO update(ProductDTO productDTO) {
         Optional<Product> optionalProduct = repository.findById(productDTO.id());
 
-        if(productDataValidation(productDTO)){
+        if (productDataValidation(productDTO)) {
             if (optionalProduct.isPresent()) {
                 Product selectedProduct = optionalProduct.get();
 

@@ -35,21 +35,6 @@ public class Product implements Serializable {
     public Product() {
     }
 
-    public Product(String name, String description, BigDecimal price, Integer quantity) {
-        this.name = name;
-        this.description = description;
-        this.price = price;
-        this.quantity = quantity;
-    }
-
-    public Product(Long id, String name, String description, BigDecimal price, Integer quantity) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.price = price;
-        this.quantity = quantity;
-    }
-
     public Product(ProductDTO productDTO) {
         this.id = productDTO.id();
         this.name = productDTO.name();

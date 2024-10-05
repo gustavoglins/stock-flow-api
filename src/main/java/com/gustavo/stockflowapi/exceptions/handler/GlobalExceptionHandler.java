@@ -1,5 +1,6 @@
 package com.gustavo.stockflowapi.exceptions.handler;
 
+import com.gustavo.stockflowapi.exceptions.DuplicateProductException;
 import com.gustavo.stockflowapi.exceptions.InvalidProductDataException;
 import com.gustavo.stockflowapi.exceptions.ProductNotFoundException;
 import com.gustavo.stockflowapi.exceptions.UnexpectedException;
@@ -16,6 +17,10 @@ public class GlobalExceptionHandler {
 
     public ResponseEntity<String> handleInvalidProductDataException(InvalidProductDataException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    }
+
+    public ResponseEntity<String> handleDuplicateProductException(DuplicateProductException e){
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
     }
 
     public ResponseEntity<String> handleProductNotFoundException(ProductNotFoundException e) {

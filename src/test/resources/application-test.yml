@@ -1,0 +1,5 @@
+spring:
+  datasource:
+    url: "jdbc:h2:stock_flow_api:~/test"
+    username: sa
+    driver-class-name: org.h2.Driver
