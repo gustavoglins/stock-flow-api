@@ -6,12 +6,13 @@ import java.time.LocalDateTime;
 
 public record ErrorResponseDTO(
 
-        LocalDateTime timestamp,
-        int status,
-        String error,
         String message,
+        int statusCode,
+        LocalDateTime timestamp,
+        String errorDescription,
         String path) implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
 }
+
