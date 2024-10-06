@@ -79,7 +79,7 @@ public class ProductController {
 
     @Operation(summary = "Deletes a Product by ID")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Product successfully deleted"),
+            @ApiResponse(responseCode = "204", description = "No content"),
             @ApiResponse(responseCode = "404", description = "Product not found"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
