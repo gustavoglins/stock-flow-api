@@ -3,6 +3,11 @@ package com.gustavo.stockflowapi.controllers;
 import com.gustavo.stockflowapi.dtos.ProductDTO;
 import com.gustavo.stockflowapi.services.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
@@ -59,6 +64,7 @@ public class ProductController {
             @ApiResponse(responseCode = "404", description = "Product not found"),
             @ApiResponse(responseCode = "500", description = "Internal server error"),
     })
+    @Parameter(name = "id", description = "Product ID", required = true)
     @GetMapping(value = "/{id}", produces = "application/json")
     public ResponseEntity<ProductDTO> findById(@PathVariable Long id) {
         ProductDTO foundProduct = service.findById(id);
@@ -83,6 +89,7 @@ public class ProductController {
             @ApiResponse(responseCode = "404", description = "Product not found"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
+    @Parameter(name = "id", description = "Product ID", required = true)
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.delete(id);
