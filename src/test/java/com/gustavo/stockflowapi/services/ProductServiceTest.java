@@ -13,6 +13,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -173,13 +175,44 @@ public class ProductServiceTest {
     @Test
     @Order(8)
     @DisplayName("test for when FindAll then Return All Products List")
-    void whenFindAll_thenReturnAllProductsList() { // TODO
+    void whenFindAll_thenReturnAllProductsList() {
+        // Arrange
+        List<Product> productList = Arrays.asList(
+                new Product(1L, "Product 1", "Description 1", BigDecimal.valueOf(10.0), 100),
+                new Product(2L, "Product 2", "Description 2", BigDecimal.valueOf(20.0), 200)
+        );
+
+        when(repository.findAll()).thenReturn(productList);
+
+        // Act
+        List<ProductDTO> returnedProducts = service.findAll();
+
+        // Assert
+        assertNotNull(returnedProducts);
+        assertEquals(2, returnedProducts.size());
+        assertEquals("Product 1", returnedProducts.get(0).name());
+        assertEquals("Product 2", returnedProducts.get(1).name());
+
+        verify(repository, times(1)).findAll();
     }
+
 
     @Test
     @Order(9)
     @DisplayName("test for when FindAll and No Products Exist then Return Empty List")
-    void whenFindAll_andNoProductsExist_thenReturnEmptyList() { // TODO
+    void whenFindAll_andNoProductsExist_thenReturnEmptyList() {
+        // Arrange
+        List<Product> emptyProductList = Collections.emptyList();
+        when(repository.findAll()).thenReturn(emptyProductList);
+
+        // Act
+        List<ProductDTO> returnedProducts = service.findAll();
+
+        // Assert
+        assertNotNull(returnedProducts);
+        assertTrue(returnedProducts.isEmpty());
+
+        verify(repository, times(1)).findAll();
     }
 
     // ProductService FIND ALL method tests END
