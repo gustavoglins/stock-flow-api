@@ -32,4 +32,15 @@ public record ProductDTO(
     public ProductDTO(Product product) {
         this(product.getId(), product.getName(), product.getDescription(), product.getPrice(), product.getQuantity());
     }
+
+    @Override
+    public String toString() {
+        return "ProductDTO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", quantity=" + quantity +
+                '}';
+    }
 }

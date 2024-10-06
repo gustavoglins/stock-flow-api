@@ -4,13 +4,11 @@ import com.gustavo.stockflowapi.dtos.ProductDTO;
 import com.gustavo.stockflowapi.services.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.ExampleObject;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +19,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/product")
 public class ProductController {
+
+    private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
 
     private final ProductService service;
 
@@ -37,7 +37,9 @@ public class ProductController {
     })
     @PostMapping(consumes = "application/json", produces = "application/json")
     public ResponseEntity<ProductDTO> create(@RequestBody @Valid ProductDTO productDTO) {
+        logger.info("Received request to create product: {}", productDTO);
         ProductDTO createdProduct = service.create(productDTO);
+        logger.info("Product created successfully with ID: {}", createdProduct.id());
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(createdProduct);
@@ -52,7 +54,9 @@ public class ProductController {
     })
     @PutMapping(consumes = "application/json", produces = "application/json")
     public ResponseEntity<ProductDTO> update(@RequestBody @Valid ProductDTO productDTO) {
+        logger.info("Received request to updated product with ID: {}", productDTO.id());
         ProductDTO updatedProduct = service.update(productDTO);
+        logger.info("Product updated successfully with ID: {}", updatedProduct.id());
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(updatedProduct);
@@ -67,7 +71,9 @@ public class ProductController {
     @Parameter(name = "id", description = "Product ID", required = true)
     @GetMapping(value = "/{id}", produces = "application/json")
     public ResponseEntity<ProductDTO> findById(@PathVariable Long id) {
+        logger.info("Receive request to find product with ID: {}", id);
         ProductDTO foundProduct = service.findById(id);
+        logger.info("Product found with ID: {}", foundProduct.id());
         return ResponseEntity
                 .ok()
                 .body(foundProduct);
@@ -80,7 +86,10 @@ public class ProductController {
     })
     @GetMapping(produces = "application/json")
     public List<ProductDTO> listAll() {
-        return service.findAll();
+        logger.info("Receive request to list all products");
+        List<ProductDTO> productDTOList = service.findAll();
+        logger.info("Returning list of {} products", productDTOList.size());
+        return productDTOList;
     }
 
     @Operation(summary = "Deletes a Product by ID")
@@ -92,7 +101,9 @@ public class ProductController {
     @Parameter(name = "id", description = "Product ID", required = true)
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
+        logger.info("Receive request to delete product with ID: {}", id);
         service.delete(id);
+        logger.info("Product with ID: {} deleted successfully", id);
         return ResponseEntity.noContent().build();
     }
 }
