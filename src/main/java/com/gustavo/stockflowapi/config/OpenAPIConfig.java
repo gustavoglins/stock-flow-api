@@ -16,8 +16,8 @@ public class OpenAPIConfig {
                         .title("Stock Flow API")
                         .version("v1")
                         .description("API for Stock Flow application")
-                        .termsOfService("https://github.com/gustavoglins")
-                        .license(new License().name("StockFlow 1.0").url("https://github.com/gustavoglins"))
+                        .termsOfService("https://github.com/gustavoglins/stock-flow-api/blob/master/License%20Agreement%20for%20StockFlowAPI")
+                        .license(new License().name("StockFlow 1.0").url("https://github.com/gustavoglins/stock-flow-api"))
                 );
     }
 }
