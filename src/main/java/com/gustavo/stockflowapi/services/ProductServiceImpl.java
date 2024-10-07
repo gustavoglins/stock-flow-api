@@ -25,7 +25,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     public boolean productDataValidation(ProductDTO productDTO) {
-        logger.info("Validating product data: {}", productDTO);
+        logger.info("Starting product data validation for: {}", productDTO);
 
         if (productDTO.name().isEmpty() || productDTO.name().isBlank()) {
             logger.error("Invalid product data: Name is empty or null");
@@ -44,27 +44,27 @@ public class ProductServiceImpl implements ProductService {
             throw new InvalidProductDataException("Quantity cannot be null, must be 0 or greater");
         }
 
-        logger.info("Product data validation successful");
+        logger.info("Product data validation successful for product: {}", productDTO);
         return true;
     }
 
     @Override
     public ProductDTO create(ProductDTO productDTO) {
-        logger.info("Creating product: {}", productDTO);
+        logger.debug("Creating product: {}", productDTO);
 
         if (productDataValidation(productDTO)) {
             ProductDTO savedProduct = new ProductDTO(repository.save(new Product(productDTO)));
-            logger.info("Product created successfully: {}", savedProduct);
+            logger.debug("Product created successfully: {}", savedProduct);
             return savedProduct;
         } else {
-            logger.error("Error creating product");
+            logger.error("Failed to create product due to unexpected error");
             throw new UnexpectedException("Unexpected error! class ProductServiceImpl, method create");
         }
     }
 
     @Override
     public ProductDTO update(ProductDTO productDTO) {
-        logger.info("Updating product with ID: {}", productDTO.id());
+        logger.debug("Updating product with ID: {}", productDTO.id());
         Optional<Product> optionalProduct = repository.findById(productDTO.id());
 
         if (productDataValidation(productDTO)) {
@@ -77,27 +77,24 @@ public class ProductServiceImpl implements ProductService {
                 selectedProduct.setQuantity(productDTO.quantity());
 
                 ProductDTO updatedProduct = new ProductDTO(repository.save(selectedProduct));
-                logger.info("Product updated successfully: {}", productDTO);
-                return updatedProduct;
+                return updatedProduct; // Log success in Controller
             } else {
-                logger.warn("Product with ID {} not found", productDTO.id());
+                logger.warn("Product with ID {} not found during update", productDTO.id());
                 throw new ProductNotFoundException("Product not found");
             }
-
         } else {
             logger.error("Error updating product");
-            throw new UnexpectedException("Unexpect error! class ProductServiceImpl, method update");
+            throw new UnexpectedException("Unexpected error! class ProductServiceImpl, method update");
         }
     }
 
     @Override
     public ProductDTO findById(Long id) {
-        logger.info("Finding product by ID: {}", id);
+        logger.debug("Finding product by ID: {}", id);
         try {
             ProductDTO foundProduct = new ProductDTO(repository.findById(id)
                     .orElseThrow(() -> new ProductNotFoundException("Product not found")));
-            logger.info("Product found: {}", foundProduct);
-            return foundProduct;
+            return foundProduct; // Log success in Controller
         } catch (ProductNotFoundException e) {
             logger.warn("Product with ID {} not found", id);
             throw e;
@@ -106,32 +103,21 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductDTO> findAll() {
-        logger.info("Finding all products");
+        logger.debug("Finding all products");
         List<Product> productsList = repository.findAll();
-
-        List<ProductDTO> productDTOList = productsList.stream()
-                .map(ProductDTO::new)
-                .toList();
-
-        logger.info("Found {} products", productDTOList.size());
-        return productDTOList;
+        return productsList.stream().map(ProductDTO::new).toList();
     }
 
     @Override
     public void delete(Long id) {
-        logger.info("Deleting product with ID: {}", id);
-        try {
-            Optional<Product> optionalProduct = repository.findById(id);
-            if (optionalProduct.isPresent()) {
-                repository.deleteById(id);
-                logger.info("Product with ID {} deleted successfully", id);
-            } else {
-                logger.warn("Product with ID {} not found", id);
-                throw new ProductNotFoundException("Product not found");
-            }
-        } catch (Exception e) {
-            logger.error("Error deleting product: {}", e.getMessage());
-            throw e;
+        logger.debug("Deleting product with ID: {}", id);
+        Optional<Product> optionalProduct = repository.findById(id);
+        if (optionalProduct.isPresent()) {
+            repository.deleteById(id);
+        } else {
+            logger.warn("Product with ID {} not found during deletion", id);
+            throw new ProductNotFoundException("Product not found");
         }
     }
+
 }

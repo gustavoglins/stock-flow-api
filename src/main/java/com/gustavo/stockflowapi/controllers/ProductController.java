@@ -29,7 +29,7 @@ public class ProductController {
         this.service = service;
     }
 
-    @Operation(summary = "Creates a new Product")
+    @Operation(summary = "Creates a new product")
     @ApiResponses({
             @ApiResponse(responseCode = "201", description = "Product successfully created"),
             @ApiResponse(responseCode = "400", description = "Invalid product data"),
@@ -37,15 +37,22 @@ public class ProductController {
     })
     @PostMapping(consumes = "application/json", produces = "application/json")
     public ResponseEntity<ProductDTO> create(@RequestBody @Valid ProductDTO productDTO) {
-        logger.info("Received request to create product: {}", productDTO);
-        ProductDTO createdProduct = service.create(productDTO);
-        logger.info("Product created successfully with ID: {}", createdProduct.id());
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(createdProduct);
+        logger.info("Receive request to create a new product: {}", productDTO);
+        try {
+            ProductDTO createdProduct = service.create(productDTO);
+            logger.info("Product created successfully. Product ID: {}", createdProduct.id());
+            return ResponseEntity
+                    .status(HttpStatus.CREATED)
+                    .body(createdProduct);
+        } catch (Exception e) {
+            logger.error("Failed to create product. Error: {}", e.getMessage());
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .build();
+        }
     }
 
-    @Operation(summary = "Updates a existing Product")
+    @Operation(summary = "Updates a existing product")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Product successfully updated"),
             @ApiResponse(responseCode = "404", description = "Product not found"),
@@ -55,11 +62,18 @@ public class ProductController {
     @PutMapping(consumes = "application/json", produces = "application/json")
     public ResponseEntity<ProductDTO> update(@RequestBody @Valid ProductDTO productDTO) {
         logger.info("Received request to updated product with ID: {}", productDTO.id());
-        ProductDTO updatedProduct = service.update(productDTO);
-        logger.info("Product updated successfully with ID: {}", updatedProduct.id());
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(updatedProduct);
+        try {
+            ProductDTO updatedProduct = service.update(productDTO);
+            logger.info("Product with ID: {}, updated successfully", updatedProduct.id());
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(updatedProduct);
+        } catch (Exception e) {
+            logger.error("Failed to updated product. Error: {}", e.getMessage());
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .build();
+        }
     }
 
     @Operation(summary = "Finds a Product by ID")
@@ -72,14 +86,21 @@ public class ProductController {
     @GetMapping(value = "/{id}", produces = "application/json")
     public ResponseEntity<ProductDTO> findById(@PathVariable Long id) {
         logger.info("Receive request to find product with ID: {}", id);
-        ProductDTO foundProduct = service.findById(id);
-        logger.info("Product found with ID: {}", foundProduct.id());
-        return ResponseEntity
-                .ok()
-                .body(foundProduct);
+        try {
+            ProductDTO foundProduct = service.findById(id);
+            logger.info("Product with ID: {}, found", foundProduct.id());
+            return ResponseEntity
+                    .ok()
+                    .body(foundProduct);
+        } catch (Exception e) {
+            logger.info("Failed to find product. Error: {}", e.getMessage());
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .build();
+        }
     }
 
-    @Operation(summary = "List all Products")
+    @Operation(summary = "Lists all products")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Products successfully retrieved"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
@@ -88,11 +109,16 @@ public class ProductController {
     public List<ProductDTO> listAll() {
         logger.info("Receive request to list all products");
         List<ProductDTO> productDTOList = service.findAll();
-        logger.info("Returning list of {} products", productDTOList.size());
-        return productDTOList;
+        try{
+            logger.info("Returning list of {} products", productDTOList.size());
+            return productDTOList;
+        } catch (Exception e){
+            logger.error("Failed to list all products. Error: {}", e.getMessage());
+            throw new RuntimeException();
+        }
     }
 
-    @Operation(summary = "Deletes a Product by ID")
+    @Operation(summary = "Deletes a product by ID")
     @ApiResponses({
             @ApiResponse(responseCode = "204", description = "No content"),
             @ApiResponse(responseCode = "404", description = "Product not found"),
@@ -102,8 +128,15 @@ public class ProductController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         logger.info("Receive request to delete product with ID: {}", id);
-        service.delete(id);
-        logger.info("Product with ID: {} deleted successfully", id);
-        return ResponseEntity.noContent().build();
+        try{
+            service.delete(id);
+            logger.info("Product with ID: {} deleted successfully", id);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e){
+            logger.error("Failed to delete product. Error: {}", e.getMessage());
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .build();
+        }
     }
 }
