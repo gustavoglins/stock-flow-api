@@ -9,6 +9,7 @@ import com.gustavo.stockflowapi.repositories.ProductRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -49,6 +50,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional
     public ProductDTO create(ProductDTO productDTO) {
         logger.debug("Creating product: {}", productDTO);
 
@@ -63,6 +65,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional
     public ProductDTO update(ProductDTO productDTO) {
         logger.debug("Updating product with ID: {}", productDTO.id());
         Optional<Product> optionalProduct = repository.findById(productDTO.id());
@@ -76,8 +79,7 @@ public class ProductServiceImpl implements ProductService {
                 selectedProduct.setPrice(productDTO.price());
                 selectedProduct.setQuantity(productDTO.quantity());
 
-                ProductDTO updatedProduct = new ProductDTO(repository.save(selectedProduct));
-                return updatedProduct; // Log success in Controller
+                return new ProductDTO(repository.save(selectedProduct)); // Log success in Controller
             } else {
                 logger.warn("Product with ID {} not found during update", productDTO.id());
                 throw new ProductNotFoundException("Product not found");
@@ -92,9 +94,8 @@ public class ProductServiceImpl implements ProductService {
     public ProductDTO findById(Long id) {
         logger.debug("Finding product by ID: {}", id);
         try {
-            ProductDTO foundProduct = new ProductDTO(repository.findById(id)
-                    .orElseThrow(() -> new ProductNotFoundException("Product not found")));
-            return foundProduct; // Log success in Controller
+            return new ProductDTO(repository.findById(id)
+                    .orElseThrow(() -> new ProductNotFoundException("Product not found"))); // Log success in Controller
         } catch (ProductNotFoundException e) {
             logger.warn("Product with ID {} not found", id);
             throw e;
@@ -109,6 +110,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         logger.debug("Deleting product with ID: {}", id);
         Optional<Product> optionalProduct = repository.findById(id);
