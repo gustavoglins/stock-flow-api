@@ -9,10 +9,10 @@
         <relativePath/>
     </parent>
     <groupId>com.gustavo</groupId>
-    <artifactId>stock-flow-API</artifactId>
+    <artifactId>stock-flow-api</artifactId>
     <version>1.0.0</version>
     <name>stock-flow-API</name>
-    <description>stock-flow-API</description>
+    <description>stock-flow-api</description>
     <url/>
     <licenses>
         <license/>
