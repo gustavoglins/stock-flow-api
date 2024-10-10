@@ -1,6 +1,6 @@
 package com.gustavo.stockflowapi.repositories;
 
-import com.gustavo.stockflowapi.model.Product;
+import com.gustavo.stockflowapi.domain.product.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

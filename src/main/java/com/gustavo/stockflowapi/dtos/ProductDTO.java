@@ -1,6 +1,6 @@
 package com.gustavo.stockflowapi.dtos;
 
-import com.gustavo.stockflowapi.model.Product;
+import com.gustavo.stockflowapi.domain.product.Product;
 import jakarta.validation.constraints.*;
 
 import java.io.Serial;

@@ -1,4 +1,4 @@
-package com.gustavo.stockflowapi.model;
+package com.gustavo.stockflowapi.domain.product;
 
 import com.gustavo.stockflowapi.dtos.ProductDTO;
 import jakarta.persistence.*;

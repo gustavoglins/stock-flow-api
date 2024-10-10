@@ -4,7 +4,7 @@ import com.gustavo.stockflowapi.dtos.ProductDTO;
 import com.gustavo.stockflowapi.exceptions.DuplicateProductException;
 import com.gustavo.stockflowapi.exceptions.InvalidProductDataException;
 import com.gustavo.stockflowapi.exceptions.ProductNotFoundException;
-import com.gustavo.stockflowapi.model.Product;
+import com.gustavo.stockflowapi.domain.product.Product;
 import com.gustavo.stockflowapi.repositories.ProductRepository;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
