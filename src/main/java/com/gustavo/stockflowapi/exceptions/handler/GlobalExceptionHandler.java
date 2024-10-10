@@ -1,10 +1,7 @@
 package com.gustavo.stockflowapi.exceptions.handler;
 
 import com.gustavo.stockflowapi.dtos.ErrorResponseDTO;
-import com.gustavo.stockflowapi.exceptions.DuplicateProductException;
-import com.gustavo.stockflowapi.exceptions.InvalidProductDataException;
-import com.gustavo.stockflowapi.exceptions.ProductNotFoundException;
-import com.gustavo.stockflowapi.exceptions.UnexpectedException;
+import com.gustavo.stockflowapi.exceptions.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,6 +64,19 @@ public class GlobalExceptionHandler {
                 HttpStatus.NOT_FOUND.value(),
                 LocalDateTime.now(),
                 "Product not found",
+                request.getRequestURI()
+        );
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+    }
+
+    @ExceptionHandler(InvalidProductDataException.class)
+    public ResponseEntity<ErrorResponseDTO> handleInvalidUserDataException(InvalidUserDataException e, HttpServletRequest request){
+        logger.error("Invalid user data: {}", e.getMessage());
+        ErrorResponseDTO errorResponse = new ErrorResponseDTO(
+                e.getMessage(),
+                HttpStatus.BAD_REQUEST.value(),
+                LocalDateTime.now(),
+                "Invalid user data",
                 request.getRequestURI()
         );
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
