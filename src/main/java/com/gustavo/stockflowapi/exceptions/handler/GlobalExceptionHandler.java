@@ -69,8 +69,8 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
     }
 
-    @ExceptionHandler(InvalidProductDataException.class)
-    public ResponseEntity<ErrorResponseDTO> handleInvalidUserDataException(InvalidUserDataException e, HttpServletRequest request){
+    @ExceptionHandler(InvalidUserDataException.class)
+    public ResponseEntity<ErrorResponseDTO> handleInvalidUserDataException(InvalidUserDataException e, HttpServletRequest request) {
         logger.error("Invalid user data: {}", e.getMessage());
         ErrorResponseDTO errorResponse = new ErrorResponseDTO(
                 e.getMessage(),
