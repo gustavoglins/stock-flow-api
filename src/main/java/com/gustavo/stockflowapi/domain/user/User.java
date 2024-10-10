@@ -1,5 +1,6 @@
 package com.gustavo.stockflowapi.domain.user;
 
+import com.gustavo.stockflowapi.dtos.UserDTO;
 import jakarta.persistence.*;
 
 import java.io.Serial;
@@ -32,6 +33,13 @@ public class User implements Serializable {
     private UserRole role;
 
     public User() {
+    }
+
+    public User(UserDTO userDTO){
+        this.name = userDTO.name();
+        this.login = userDTO.login();
+        this.password = userDTO.password();
+        this.role = userDTO.role();
     }
 
     public User(UUID id, String name, String login, String password, UserRole role) {
