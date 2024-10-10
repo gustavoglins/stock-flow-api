@@ -10,11 +10,11 @@ import java.math.BigDecimal;
 public record ProductDTO(
         Long id,
 
-        @NotBlank(message = "Name cannot be blank or null")
+        @NotBlank(message = "Name cannot be blank or empty")
         @Size(max = 100, message = "Name cannot exceed 100 characters")
         String name,
 
-        @NotBlank(message = "Description cannot be blank or null")
+        @NotBlank(message = "Description cannot be blank or empty")
         @Size(max = 255, message = "Description cannot exceed 255 characters")
         String description,
 
