@@ -1,15 +1,17 @@
 package com.gustavo.stockflowapi.dtos;
 
+import com.gustavo.stockflowapi.domain.user.User;
 import com.gustavo.stockflowapi.domain.user.UserRole;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.UUID;
 
 public record UserDTO(
 
-        Long id,
+        UUID id,
 
         @NotBlank(message = "Name cannot be blank or empty")
         @Size(max = 100, message = "Name cannot exceed 100 characters")
@@ -28,4 +30,8 @@ public record UserDTO(
 
     @Serial
     private static final long serialVersionUID = 1L;
+
+    public UserDTO(User user){
+        this(user.getId(), user.getName(), user.getLogin(), user.getPassword(), user.getRole());
+    }
 }
