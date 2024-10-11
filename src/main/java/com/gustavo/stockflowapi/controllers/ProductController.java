@@ -38,19 +38,8 @@ public class ProductController {
     })
     @PostMapping(consumes = "application/json", produces = "application/json")
     public ResponseEntity<ProductDTO> create(@RequestBody @Valid ProductDTO productDTO) {
-        logger.info("Receive request to create a new product: {}", productDTO);
-        try {
-            ProductDTO createdProduct = service.create(productDTO);
-            logger.info("Product created successfully. Product ID: {}", createdProduct.id());
-            return ResponseEntity
-                    .status(HttpStatus.CREATED)
-                    .body(createdProduct);
-        } catch (Exception e) {
-            logger.error("Failed to create product. Error: {}", e.getMessage());
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .build();
-        }
+        ProductDTO createdProduct = service.create(productDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdProduct);
     }
 
     @Operation(summary = "Updates a existing product")
@@ -62,19 +51,8 @@ public class ProductController {
     })
     @PutMapping(consumes = "application/json", produces = "application/json")
     public ResponseEntity<ProductDTO> update(@RequestBody @Valid ProductDTO productDTO) {
-        logger.info("Received request to updated product with ID: {}", productDTO.id());
-        try {
-            ProductDTO updatedProduct = service.update(productDTO);
-            logger.info("Product with ID: {}, updated successfully", updatedProduct.id());
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(updatedProduct);
-        } catch (Exception e) {
-            logger.error("Failed to updated product. Error: {}", e.getMessage());
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .build();
-        }
+        ProductDTO updatedProduct = service.update(productDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(updatedProduct);
     }
 
     @Operation(summary = "Finds a Product by ID")
@@ -86,19 +64,9 @@ public class ProductController {
     @Parameter(name = "id", description = "Product ID", required = true)
     @GetMapping(value = "/{id}", produces = "application/json")
     public ResponseEntity<ProductDTO> findById(@PathVariable("id") Long id) {
-        logger.info("Receive request to find product with ID: {}", id);
-        try {
-            ProductDTO foundProduct = service.findById(id);
-            logger.info("Product with ID: {}, found", foundProduct.id());
-            return ResponseEntity
-                    .ok()
-                    .body(foundProduct);
-        } catch (Exception e) {
-            logger.info("Failed to find product. Error: {}", e.getMessage());
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .build();
-        }
+        ProductDTO foundProduct = service.findById(id);
+        return ResponseEntity.ok().body(foundProduct);
+
     }
 
     @Operation(summary = "Lists all products")
@@ -108,15 +76,7 @@ public class ProductController {
     })
     @GetMapping(produces = "application/json")
     public List<ProductDTO> listAll() {
-        logger.info("Receive request to list all products");
-        List<ProductDTO> productDTOList = service.findAll();
-        try{
-            logger.info("Returning list of {} products", productDTOList.size());
-            return productDTOList;
-        } catch (Exception e){
-            logger.error("Failed to list all products. Error: {}", e.getMessage());
-            throw new RuntimeException();
-        }
+        return service.findAll();
     }
 
     @Operation(summary = "Deletes a product by ID")
@@ -128,16 +88,7 @@ public class ProductController {
     @Parameter(name = "id", description = "Product ID", required = true)
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
-        logger.info("Receive request to delete product with ID: {}", id);
-        try{
-            service.delete(id);
-            logger.info("Product with ID: {} deleted successfully", id);
-            return ResponseEntity.noContent().build();
-        } catch (Exception e){
-            logger.error("Failed to delete product. Error: {}", e.getMessage());
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .build();
-        }
+        service.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }
