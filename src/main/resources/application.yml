@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: StockFlowAPI
+  datasource:
+    url: jdbc:postgresql://localhost:5432/db_stock_flow
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
