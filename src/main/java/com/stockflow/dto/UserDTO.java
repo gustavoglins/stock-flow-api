@@ -25,7 +25,7 @@ public record UserDTO(
     @Serial
     private static final long serialVersionUID = 1L;
 
-    public UserDTO(User user){
+    public UserDTO(User user) {
         this(user.getId(), user.getLogin(), user.getPassword(), user.getRole());
     }
 }

@@ -32,7 +32,7 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(UserDTO userDTO){
+    public User(UserDTO userDTO) {
         this.login = userDTO.login();
         this.password = userDTO.password();
         this.role = userDTO.role();
