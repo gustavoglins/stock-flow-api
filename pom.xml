@@ -43,7 +43,13 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-         <!-- Dependency for Devtools -->
+        <!-- Dependency for Spring Validations -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
+        <!-- Dependency for Spring Devtools -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
