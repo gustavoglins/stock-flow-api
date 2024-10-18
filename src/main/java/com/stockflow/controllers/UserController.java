@@ -2,6 +2,7 @@ package com.stockflow.controllers;
 
 import com.stockflow.dto.UserDTO;
 import com.stockflow.services.UserService;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -24,7 +25,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserDTO> create(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<UserDTO> create(@RequestBody @Valid UserDTO userDTO) {
         logger.info("Receive request to create a new user.");
         UserDTO createdUser = service.create(userDTO);
         logger.info("User created successfully with ID: {}.", createdUser.id());
@@ -32,7 +33,7 @@ public class UserController {
     }
 
     @PutMapping
-    public ResponseEntity<UserDTO> update(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<UserDTO> update(@RequestBody @Valid UserDTO userDTO) {
         logger.info("Receive request to update an user with ID: {}.", userDTO.id());
         UserDTO updatedUser = service.update(userDTO);
         logger.info("User with ID: {} updated successfully.", updatedUser.id());
