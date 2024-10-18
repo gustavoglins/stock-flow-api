@@ -19,13 +19,14 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = true, nullable = false, length = 150)
     private String login;
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = true, nullable = false, length = 150)
     private String password;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 10)
     private UserRole role;
 
     public User() {
