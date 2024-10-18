@@ -1,5 +1,6 @@
 package com.stockflow.model.user;
 
+import com.stockflow.dto.UserDTO;
 import jakarta.persistence.*;
 
 import java.io.Serial;
@@ -30,11 +31,10 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(UUID id, String login, String password, UserRole role) {
-        this.id = id;
-        this.login = login;
-        this.password = password;
-        this.role = role;
+    public User(UserDTO userDTO){
+        this.login = userDTO.login();
+        this.password = userDTO.password();
+        this.role = userDTO.role();
     }
 
     public UUID getId() {
