@@ -26,9 +26,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO create(UserDTO userDTO) {
         logger.info("Creating a new user with login: {}", userDTO.login());
-        User createdUser = repository.save(new User(userDTO));
-        logger.info("User created successfully with ID: {}", createdUser.getId());
-        return new UserDTO(createdUser);
+        UserDTO createdUser = new UserDTO(repository.save(new User(userDTO)));
+        logger.info("User created successfully with ID: {}", createdUser.id());
+        return createdUser;
     }
 
     @Override
@@ -44,9 +44,9 @@ public class UserServiceImpl implements UserService {
             retrievedUser.setPassword(userDTO.password());
             retrievedUser.setRole(userDTO.role());
 
-            User updatedUser = repository.save(retrievedUser);
-            logger.info("User with ID: {} updated successfully.", updatedUser.getId());
-            return new UserDTO(updatedUser);
+            UserDTO updatedUser = new UserDTO(repository.save(retrievedUser));
+            logger.info("User with ID: {} updated successfully.", updatedUser.id());
+            return updatedUser;
         } else {
             logger.error("User with ID: {} not found for update.", userDTO.id());
             throw new UserNotFoundException("User with ID: " + userDTO.id() + " not found.");
