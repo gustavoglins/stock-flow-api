@@ -18,49 +18,49 @@ import java.util.UUID;
 public class UserController {
 
     private final UserService service;
-    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     public UserController(UserService service) {
         this.service = service;
     }
 
     @PostMapping
-    public ResponseEntity<UserDTO> create(@RequestBody @Valid UserDTO userDTO) {
+    public ResponseEntity<UserDTO> handleCreate(@RequestBody @Valid UserDTO userDTO) {
         logger.info("Receive request to create a new user.");
         UserDTO createdUser = service.create(userDTO);
-        logger.info("User created successfully with ID: {}.", createdUser.id());
+        logger.info("Request to create a new user processed successfully.");
         return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
     }
 
     @PutMapping
-    public ResponseEntity<UserDTO> update(@RequestBody @Valid UserDTO userDTO) {
+    public ResponseEntity<UserDTO> handleUpdate(@RequestBody @Valid UserDTO userDTO) {
         logger.info("Receive request to update an user with ID: {}.", userDTO.id());
         UserDTO updatedUser = service.update(userDTO);
-        logger.info("User with ID: {} updated successfully.", updatedUser.id());
+        logger.info("Request to update user with ID: {} processed successfully.", userDTO.id());
         return ResponseEntity.ok(updatedUser);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDTO> findById(@PathVariable UUID id) {
+    public ResponseEntity<UserDTO> handleFindById(@PathVariable UUID id) {
         logger.info("Receive request to find an user with ID: {}.", id);
         UserDTO foundUser = service.findById(id);
-        logger.info("User with ID: {} found successfully.", id);
+        logger.info("Request to find user by ID: {} processed successfully.", id);
         return ResponseEntity.ok(foundUser);
     }
 
     @GetMapping
-    public ResponseEntity<List<UserDTO>> listAll() {
+    public ResponseEntity<List<UserDTO>> handleListAll() {
         logger.info("Receive request to list all users registered.");
         List<UserDTO> userDTOList = service.listAll();
-        logger.info("All registered users found successfully. Total users: {}.", userDTOList.size());
+        logger.info("Request to list all users processed successfully. Total users: {}.", userDTOList.size());
         return ResponseEntity.ok(userDTOList);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable UUID id) {
+    public ResponseEntity<String> handleDelete(@PathVariable UUID id) {
         logger.info("Receive request to delete an user with ID: {}.", id);
         service.delete(id);
-        logger.info("User with ID: {} deleted successfully.", id);
-        return ResponseEntity.noContent().build();
+        logger.info("Request to delete user with ID: {} processed successfully.", id);
+        return ResponseEntity.ok(String.format("User with ID: %s deleted successfully.", id));
     }
 }
