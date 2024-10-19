@@ -1,5 +1,6 @@
 package com.stockflow.exceptions.handler;
 
+import com.stockflow.exceptions.ProductNotFoundException;
 import com.stockflow.exceptions.UserNotFoundException;
 import com.stockflow.exceptions.reponse.ExceptionResponse;
 import org.slf4j.Logger;
@@ -58,6 +59,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<ExceptionResponse> handleUserNotFoundExceptions(UserNotFoundException exception, WebRequest request) {
         logger.error("UserNotFoundException: {} - Request: {}", exception.getMessage(), request.getDescription(false));
+        return buildResponse(exception, HttpStatus.NOT_FOUND, request);
+    }
+
+    @ExceptionHandler(ProductNotFoundException.class)
+    public ResponseEntity<ExceptionResponse> handleProductNotFoundException(ProductNotFoundException exception, WebRequest request){
+        logger.error("ProductNotFoundException: {} - Request: {}", exception.getMessage(), request.getDescription(false));
         return buildResponse(exception, HttpStatus.NOT_FOUND, request);
     }
 }
