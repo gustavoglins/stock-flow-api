@@ -3,6 +3,7 @@ package com.stockflow.model.product;
 import com.stockflow.dto.ProductDTO;
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 @Entity
@@ -19,7 +20,7 @@ public class Product {
     @Column(nullable = false)
     private String description;
 
-    @Column(nullable = false, scale = 11, precision = 2)
+    @Column(nullable = false)
     private double price;
 
     @Column(nullable = false)
@@ -29,7 +30,6 @@ public class Product {
     }
 
     public Product(ProductDTO productDTO){
-        this.id = productDTO.id();
         this.name = productDTO.name();
         this.description = productDTO.description();
         this.price = productDTO.price();

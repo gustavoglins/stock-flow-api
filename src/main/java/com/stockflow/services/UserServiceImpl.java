@@ -71,7 +71,7 @@ public class UserServiceImpl implements UserService {
     public List<UserDTO> listAll() {
         logger.info("Listing all registered users.");
         List<User> userList = repository.findAll();
-        logger.info("Total users found: {}", userList.size());
+        logger.info("Total users found: {}.", userList.size());
         return userList.stream()
                 .map(UserDTO::new)
                 .collect(Collectors.toList());
@@ -79,7 +79,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void delete(UUID id) {
-        logger.info("Attempting to delete user with ID: {}", id);
+        logger.info("Deleting user with ID: {}.", id);
         Optional<User> optionalUser = repository.findById(id);
 
         if (optionalUser.isPresent()) {

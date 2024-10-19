@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(value = "/api/user", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/user")
 @Tag(name = "User", description = "Endpoints for user actions.")
 public class UserController {
 
@@ -26,7 +26,7 @@ public class UserController {
         this.service = service;
     }
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserDTO> handleCreate(@RequestBody @Valid UserDTO userDTO) {
         logger.info("Receive request to create a new user.");
         UserDTO createdUser = service.create(userDTO);
@@ -34,7 +34,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
     }
 
-    @PutMapping
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserDTO> handleUpdate(@RequestBody @Valid UserDTO userDTO) {
         logger.info("Receive request to update an user with ID: {}.", userDTO.id());
         UserDTO updatedUser = service.update(userDTO);
@@ -42,11 +42,11 @@ public class UserController {
         return ResponseEntity.ok(updatedUser);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserDTO> handleFindById(@PathVariable UUID id) {
         logger.info("Receive request to find an user with ID: {}.", id);
         UserDTO foundUser = service.findById(id);
-        logger.info("Request to find user by ID: {} processed successfully.", id);
+        logger.info("Request to find user with ID: {} processed successfully.", id);
         return ResponseEntity.ok(foundUser);
     }
 
