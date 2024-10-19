@@ -1,5 +1,6 @@
 package com.stockflow.model.product;
 
+import com.stockflow.dto.ProductDTO;
 import jakarta.persistence.*;
 
 import java.util.Objects;
@@ -25,6 +26,14 @@ public class Product {
     private Long quantity;
 
     public Product() {
+    }
+
+    public Product(ProductDTO productDTO){
+        this.id = productDTO.id();
+        this.name = productDTO.name();
+        this.description = productDTO.description();
+        this.price = productDTO.price();
+        this.quantity = productDTO.quantity();
     }
 
     public Long getId() {
