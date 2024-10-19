@@ -31,6 +31,13 @@
     </properties>
     <dependencies>
 
+        <!-- Dependency for Spring Doc -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-api</artifactId>
+            <version>2.6.0</version>
+        </dependency>
+
         <!-- Dependency for Spring Thymeleaf -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
