@@ -17,8 +17,8 @@ import java.util.UUID;
 @RequestMapping(value = "/api/user", produces = MediaType.APPLICATION_JSON_VALUE)
 public class UserController {
 
-    private final UserService service;
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+    private final UserService service;
 
     public UserController(UserService service) {
         this.service = service;
