@@ -2,6 +2,8 @@ package com.stockflow.exceptions.handler;
 
 import com.stockflow.exceptions.UserNotFoundException;
 import com.stockflow.exceptions.reponse.ExceptionResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -17,6 +19,8 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+
     private ResponseEntity<ExceptionResponse> buildResponse(Exception exception, HttpStatus status, WebRequest request) {
         ExceptionResponse exceptionResponse = new ExceptionResponse(
                 exception.getMessage(),
@@ -28,6 +32,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ExceptionResponse> handleGenericExceptions(Exception exception, WebRequest request) {
+        logger.error("Unexpected error: {} - {}", exception.getClass().getSimpleName(), exception.getMessage(), exception);
         return buildResponse(exception, HttpStatus.INTERNAL_SERVER_ERROR, request);
     }
 
@@ -39,6 +44,9 @@ public class GlobalExceptionHandler {
             String errorMessage = error.getDefaultMessage();
             errors.put(fieldName, errorMessage);
         });
+
+        logger.warn("Validation failed: {}", errors);
+
         ExceptionResponse exceptionResponse = new ExceptionResponse(
                 "Validation errors occurred.",
                 errors.toString(),
@@ -49,6 +57,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<ExceptionResponse> handleUserNotFoundExceptions(UserNotFoundException exception, WebRequest request) {
+        logger.error("UserNotFoundException: {} - Request: {}", exception.getMessage(), request.getDescription(false));
         return buildResponse(exception, HttpStatus.NOT_FOUND, request);
     }
 }
