@@ -2,6 +2,7 @@ package com.stockflow.controllers;
 
 import com.stockflow.dto.UserDTO;
 import com.stockflow.services.UserService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +15,8 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(value = "/api/user", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/user", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+@Tag(name = "User", description = "Endpoints for user actions.")
 public class UserController {
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
@@ -61,6 +63,6 @@ public class UserController {
         logger.info("Receive request to delete an user with ID: {}.", id);
         service.delete(id);
         logger.info("Request to delete user with ID: {} processed successfully.", id);
-        return ResponseEntity.ok(String.format("User with ID: %s deleted successfully.", id));
+        return ResponseEntity.ok("User with ID: " + id + "  deleted successfully.");
     }
 }
