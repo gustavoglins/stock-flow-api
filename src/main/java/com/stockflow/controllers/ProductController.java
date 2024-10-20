@@ -1,7 +1,6 @@
 package com.stockflow.controllers;
 
 import com.stockflow.dto.ProductDTO;
-import com.stockflow.dto.UserDTO;
 import com.stockflow.services.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
