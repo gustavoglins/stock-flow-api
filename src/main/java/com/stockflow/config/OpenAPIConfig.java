@@ -13,15 +13,15 @@ public class OpenAPIConfig {
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
-                .title("StockFlow API")
-                .version("v1")
-                .description("StockFlowAPI - Streamlined Inventory Management Solution")
-                .termsOfService("https://github.com/gustavoglins/stock-flow-api/blob/master/LICENSE.md")
-                .license(
-                        new License()
-                                .name("StockFlow 1.0")
-                                .url("https://github.com/gustavoglins/stock-flow-api")
+                        .title("StockFlow API")
+                        .version("v1")
+                        .description("StockFlowAPI - Streamlined Inventory Management Solution")
+                        .termsOfService("https://github.com/gustavoglins/stock-flow-api/blob/master/LICENSE.md")
+                        .license(
+                                new License()
+                                        .name("StockFlow 1.0")
+                                        .url("https://github.com/gustavoglins/stock-flow-api")
                         )
-        );
+                );
     }
 }
