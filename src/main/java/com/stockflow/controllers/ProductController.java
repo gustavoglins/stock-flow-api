@@ -3,6 +3,7 @@ package com.stockflow.controllers;
 import com.stockflow.dto.ProductDTO;
 import com.stockflow.services.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -84,7 +85,7 @@ public class ProductController {
             }
     )
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ProductDTO> findById(@PathVariable("id") Long id) {
+    public ResponseEntity<ProductDTO> findById(@PathVariable("id") @Parameter(description = "The ID of the product to be found.") Long id) {
         logger.info("Received request to find product by id.");
         ProductDTO foundProduct = service.findById(id);
         logger.info("Request to find product with ID: {} processed successfully.", id);
@@ -128,7 +129,7 @@ public class ProductController {
             }
     )
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> delete(@PathVariable Long id) {
+    public ResponseEntity<String> delete(@PathVariable("id") @Parameter(description = "The ID of the product to be deleted.") Long id) {
         logger.info("Received request to delete product by id.");
         service.delete(id);
         logger.info("Request to delete product with ID: {} processed successfully.", id);
