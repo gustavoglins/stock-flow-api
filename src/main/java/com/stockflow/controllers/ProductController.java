@@ -31,6 +31,7 @@ public class ProductController {
         this.service = service;
     }
 
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(
             summary = "Create a new product",
             description = "Create a new product",
@@ -43,7 +44,6 @@ public class ProductController {
                     @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content())
             }
     )
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ProductDTO> create(@RequestBody @Valid ProductDTO productDTO) {
         logger.info("Received request to create a new product.");
         ProductDTO createdProduct = service.create(productDTO);
@@ -51,6 +51,7 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdProduct);
     }
 
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(
             summary = "Update a product",
             description = "Update a product",
@@ -64,7 +65,6 @@ public class ProductController {
                     @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content()),
             }
     )
-    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ProductDTO> update(@RequestBody @Valid ProductDTO productDTO) {
         logger.info("Received request to update a product.");
         ProductDTO updatedProduct = service.update(productDTO);
@@ -72,6 +72,7 @@ public class ProductController {
         return ResponseEntity.ok(updatedProduct);
     }
 
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(
             summary = "Find a product by ID",
             description = "Find a product by ID",
@@ -84,7 +85,6 @@ public class ProductController {
                     @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content()),
             }
     )
-    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ProductDTO> findById(@PathVariable("id") @Parameter(description = "The ID of the product to be found.") Long id) {
         logger.info("Received request to find product by id.");
         ProductDTO foundProduct = service.findById(id);
@@ -92,6 +92,7 @@ public class ProductController {
         return ResponseEntity.ok(foundProduct);
     }
 
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(
             summary = "List all products registered",
             description = "List all products registered",
@@ -107,7 +108,6 @@ public class ProductController {
                     @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content()),
             }
     )
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<ProductDTO>> listAll() {
         logger.info("Received request to list all products registered.");
         List<ProductDTO> productDTOList = service.listAll();
@@ -115,6 +115,7 @@ public class ProductController {
         return ResponseEntity.ok(productDTOList);
     }
 
+    @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(
             summary = "Delete a product by ID",
             description = "Delete a product by ID",
@@ -128,7 +129,6 @@ public class ProductController {
                     @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content()),
             }
     )
-    @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> delete(@PathVariable("id") @Parameter(description = "The ID of the product to be deleted.") Long id) {
         logger.info("Received request to delete product by id.");
         service.delete(id);

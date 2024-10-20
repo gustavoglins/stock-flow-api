@@ -32,6 +32,7 @@ public class UserController {
         this.service = service;
     }
 
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(
             summary = "Create a new user",
             description = "Create a new User",
@@ -42,8 +43,8 @@ public class UserController {
                     @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content()),
                     @ApiResponse(description = "Conflict", responseCode = "409", content = @Content()),
                     @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content())
-            })
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+            }
+    )
     public ResponseEntity<UserDTO> create(@RequestBody @Valid UserDTO userDTO) {
         logger.info("Received request to create a new user.");
         UserDTO createdUser = service.create(userDTO);
@@ -72,6 +73,7 @@ public class UserController {
         return ResponseEntity.ok(updatedUser);
     }
 
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(
             summary = "Find an user by ID",
             description = "Find an user by ID",
@@ -84,7 +86,6 @@ public class UserController {
                     @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content()),
             }
     )
-    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserDTO> findById(@PathVariable @Parameter(description = "The ID of the product to be found.") UUID id) {
         logger.info("Receive request to find an user with ID: {}.", id);
         UserDTO foundUser = service.findById(id);
@@ -92,6 +93,7 @@ public class UserController {
         return ResponseEntity.ok(foundUser);
     }
 
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(
             summary = "List all users registered",
             description = "List all users registered",
@@ -107,7 +109,6 @@ public class UserController {
                     @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content()),
             }
     )
-    @GetMapping
     public ResponseEntity<List<UserDTO>> listAll() {
         logger.info("Receive request to list all users registered.");
         List<UserDTO> userDTOList = service.listAll();
@@ -115,6 +116,7 @@ public class UserController {
         return ResponseEntity.ok(userDTOList);
     }
 
+    @DeleteMapping(value = "/{id}", produces = MediaType.TEXT_PLAIN_VALUE)
     @Operation(
             summary = "Delete an user by ID",
             description = "Delete an user by ID",
@@ -128,7 +130,6 @@ public class UserController {
                     @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content()),
             }
     )
-    @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable @Parameter(description = "The ID of the user to be deleted.") UUID id) {
         logger.info("Receive request to delete an user with ID: {}.", id);
         service.delete(id);
