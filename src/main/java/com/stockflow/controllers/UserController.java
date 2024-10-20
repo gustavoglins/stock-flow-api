@@ -72,8 +72,8 @@ public class UserController {
     }
 
     @Operation(
-            summary = "Find a user by ID",
-            description = "Find a user by ID",
+            summary = "Find an user by ID",
+            description = "Find an user by ID",
             tags = {"User"},
             responses = {
                     @ApiResponse(description = "Ok", responseCode = "200", content = @Content(schema = @Schema(implementation = UserDTO.class))),
