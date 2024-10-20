@@ -3,7 +3,6 @@ package com.stockflow.model.product;
 import com.stockflow.dto.ProductDTO;
 import jakarta.persistence.*;
 
-import java.math.BigDecimal;
 import java.util.Objects;
 
 @Entity
@@ -29,7 +28,7 @@ public class Product {
     public Product() {
     }
 
-    public Product(ProductDTO productDTO){
+    public Product(ProductDTO productDTO) {
         this.name = productDTO.name();
         this.description = productDTO.description();
         this.price = productDTO.price();
@@ -38,10 +37,6 @@ public class Product {
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {
