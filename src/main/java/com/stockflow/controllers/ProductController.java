@@ -20,7 +20,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/product")
-@Tag(name = "Product", description = "Endpoints for product actions.")
+@Tag(name = "Product Management", description = "Endpoints for managing products, including creating, updating, retrieving, and deleting product information.")
 public class ProductController {
 
     private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
