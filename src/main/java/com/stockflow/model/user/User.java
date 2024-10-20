@@ -42,10 +42,6 @@ public class User implements Serializable {
         return id;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
     public String getLogin() {
         return login;
     }
