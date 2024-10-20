@@ -21,7 +21,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/api/user")
-@Tag(name = "User", description = "Endpoints for user actions.")
+@Tag(name = "User Management", description = "Endpoints for managing users, including creating, updating, retrieving, and deleting user information.")
 public class UserController {
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
