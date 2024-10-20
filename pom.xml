@@ -35,6 +35,12 @@
     </properties>
     <dependencies>
 
+        <!-- Dependency for Spring Security -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
         <!-- Dependency for Spring Doc UI -->
         <dependency>
             <groupId>org.springdoc</groupId>
@@ -87,13 +93,20 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!-- Dependency for Spring test -->
+
+        <!-- Dependency for Spring tests -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
 
+        <!-- Dependency for Spring Security tests -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
