@@ -63,7 +63,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(ProductNotFoundException.class)
-    public ResponseEntity<ExceptionResponse> handleProductNotFoundException(ProductNotFoundException exception, WebRequest request){
+    public ResponseEntity<ExceptionResponse> handleProductNotFoundException(ProductNotFoundException exception, WebRequest request) {
         logger.error("ProductNotFoundException: {} - Request: {}", exception.getMessage(), request.getDescription(false));
         return buildResponse(exception, HttpStatus.NOT_FOUND, request);
     }
