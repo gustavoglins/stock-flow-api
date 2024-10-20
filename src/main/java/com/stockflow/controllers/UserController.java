@@ -27,7 +27,7 @@ public class UserController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UserDTO> handleCreate(@RequestBody @Valid UserDTO userDTO) {
+    public ResponseEntity<UserDTO> create(@RequestBody @Valid UserDTO userDTO) {
         logger.info("Receive request to create a new user.");
         UserDTO createdUser = service.create(userDTO);
         logger.info("Request to create a new user processed successfully.");
@@ -35,7 +35,7 @@ public class UserController {
     }
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UserDTO> handleUpdate(@RequestBody @Valid UserDTO userDTO) {
+    public ResponseEntity<UserDTO> update(@RequestBody @Valid UserDTO userDTO) {
         logger.info("Receive request to update an user with ID: {}.", userDTO.id());
         UserDTO updatedUser = service.update(userDTO);
         logger.info("Request to update user with ID: {} processed successfully.", userDTO.id());
@@ -43,7 +43,7 @@ public class UserController {
     }
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UserDTO> handleFindById(@PathVariable UUID id) {
+    public ResponseEntity<UserDTO> findById(@PathVariable UUID id) {
         logger.info("Receive request to find an user with ID: {}.", id);
         UserDTO foundUser = service.findById(id);
         logger.info("Request to find user with ID: {} processed successfully.", id);
@@ -51,7 +51,7 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<UserDTO>> handleListAll() {
+    public ResponseEntity<List<UserDTO>> listAll() {
         logger.info("Receive request to list all users registered.");
         List<UserDTO> userDTOList = service.listAll();
         logger.info("Request to list all users processed successfully. Total users: {}.", userDTOList.size());
@@ -59,7 +59,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> handleDelete(@PathVariable UUID id) {
+    public ResponseEntity<String> delete(@PathVariable UUID id) {
         logger.info("Receive request to delete an user with ID: {}.", id);
         service.delete(id);
         logger.info("Request to delete user with ID: {} processed successfully.", id);
