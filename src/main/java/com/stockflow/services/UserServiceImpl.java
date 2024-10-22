@@ -6,6 +6,7 @@ import com.stockflow.model.user.User;
 import com.stockflow.repositories.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,16 +19,24 @@ public class UserServiceImpl implements UserService {
 
     private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
     private final UserRepository repository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository repository) {
+    public UserServiceImpl(UserRepository repository, PasswordEncoder passwordEncoder) {
         this.repository = repository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public UserDTO create(UserDTO userDTO) {
         logger.info("Creating a new user with login: {}", userDTO.login());
-        UserDTO createdUser = new UserDTO(repository.save(new User(userDTO)));
+        String encryptedPassword = passwordEncoder.encode(userDTO.password());
+
+        User user = new User(userDTO);
+        user.setPassword(encryptedPassword);
+
+        UserDTO createdUser = new UserDTO(repository.save(user));
         logger.info("User created successfully with ID: {}", createdUser.id());
+
         return createdUser;
     }
 
