@@ -1,3 +1,8 @@
+api:
+  security:
+    token:
+      secret: "${JWT_SECRET:my-secret-key}"
+
 spring:
   application:
     name: StockFlowAPI
