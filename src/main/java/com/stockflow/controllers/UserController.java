@@ -112,7 +112,7 @@ public class UserController {
     public ResponseEntity<List<UserDTO>> listAll() {
         logger.info("Receive request to list all users registered.");
         List<UserDTO> userDTOList = service.listAll();
-        logger.info("Request to list all users processed successfully. Total users: {}.", userDTOList.size());
+        logger.info("Request to list all users processed successfully. Total users returned: {}.", userDTOList.size());
         return ResponseEntity.ok(userDTOList);
     }
 
