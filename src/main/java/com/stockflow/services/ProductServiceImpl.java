@@ -26,7 +26,7 @@ public class ProductServiceImpl implements ProductService {
     public ProductDTO create(ProductDTO productDTO) {
         logger.info("Creating a new product ({}).", productDTO.name());
         Product createdProduct = repository.save(new Product(productDTO));
-        logger.info("Product created successfully with ID: {}.", productDTO.id());
+        logger.info("Product created successfully with ID: {}.", createdProduct.getId());
         return new ProductDTO(createdProduct);
     }
 
