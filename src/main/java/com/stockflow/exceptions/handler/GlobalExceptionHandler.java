@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 
-import javax.naming.AuthenticationException;
 import java.nio.file.AccessDeniedException;
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -40,9 +39,6 @@ public class GlobalExceptionHandler {
     // ------------------------------- Method to facilite create ExceptionResponses End --------------------------------
 
 
-
-
-
     // ------------------------------------------------ Generic Exception ----------------------------------------------
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ExceptionResponse> handleGenericExceptions(Exception exception, WebRequest request) {
@@ -50,9 +46,6 @@ public class GlobalExceptionHandler {
         return buildResponse(exception, HttpStatus.INTERNAL_SERVER_ERROR, request);
     }
     // ---------------------------------------------- Generic Exception End --------------------------------------------
-
-
-
 
 
     // -------------------------------------------- Validations Exceptions ---------------------------------------------
@@ -77,9 +70,6 @@ public class GlobalExceptionHandler {
     // --------------------------------------- Validations Exceptions End ----------------------------------------------
 
 
-
-
-
     // -------------------------------------------- User Exceptions ----------------------------------------------------
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<ExceptionResponse> handleUserNotFoundExceptions(UserNotFoundException exception, WebRequest request) {
@@ -89,9 +79,6 @@ public class GlobalExceptionHandler {
     // ------------------------------------------ User Exceptions End --------------------------------------------------
 
 
-
-
-
     // ------------------------------------------- Product Exceptions --------------------------------------------------
     @ExceptionHandler(ProductNotFoundException.class)
     public ResponseEntity<ExceptionResponse> handleProductNotFoundExceptions(ProductNotFoundException exception, WebRequest request) {
@@ -99,10 +86,6 @@ public class GlobalExceptionHandler {
         return buildResponse(exception, HttpStatus.NOT_FOUND, request);
     }
     // ------------------------------------------ Product Exceptions End -----------------------------------------------
-
-
-
-
 
 
     // --------------------------------------------- Security Exceptions -----------------------------------------------
@@ -130,9 +113,6 @@ public class GlobalExceptionHandler {
         return buildResponse(exception, HttpStatus.FORBIDDEN, request);
     }
     // ------------------------------------------- Security Exceptions End ---------------------------------------------
-
-
-
 
 
     // --------------------------------------------- JWT Exceptions ----------------------------------------------------
