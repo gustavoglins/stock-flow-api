@@ -52,6 +52,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
     }
 
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(
             summary = "Update an user",
             description = "Update an user",
@@ -65,7 +66,6 @@ public class UserController {
                     @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content()),
             }
     )
-    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserDTO> update(@RequestBody @Valid UserDTO userDTO) {
         logger.info("Receive request to update an user with ID: {}.", userDTO.id());
         UserDTO updatedUser = service.update(userDTO);
