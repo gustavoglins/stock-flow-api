@@ -1,6 +1,6 @@
 package com.stockflow.model.user;
 
-import com.stockflow.dto.userDtos.RegisterDTO;
+import com.stockflow.dto.userDtos.SignUpRequestDTO;
 import com.stockflow.dto.userDtos.UserDTO;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -38,7 +38,7 @@ public class User implements UserDetails, Serializable {
     public User() {
     }
 
-    public User(RegisterDTO data) {
+    public User(SignUpRequestDTO data) {
         this.login = data.login();
         this.password = data.password();
         this.role = data.role();

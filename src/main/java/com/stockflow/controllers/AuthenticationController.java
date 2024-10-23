@@ -1,7 +1,7 @@
 package com.stockflow.controllers;
 
-import com.stockflow.dto.userDtos.AuthenticationDTO;
-import com.stockflow.dto.userDtos.RegisterDTO;
+import com.stockflow.dto.userDtos.SignInRequestDTO;
+import com.stockflow.dto.userDtos.SignUpRequestDTO;
 import com.stockflow.dto.userDtos.SignInResponseDTO;
 import com.stockflow.dto.userDtos.SignUpResponseDTO;
 import com.stockflow.model.user.User;
@@ -52,7 +52,7 @@ public class AuthenticationController {
                     @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
             }
     )
-    public ResponseEntity<SignInResponseDTO> signin(@RequestBody @Valid AuthenticationDTO data) {
+    public ResponseEntity<SignInResponseDTO> signin(@RequestBody @Valid SignInRequestDTO data) {
         logger.info("Receive request to sign-in.");
         var usernamePassword = new UsernamePasswordAuthenticationToken(data.login(), data.password());
         var auth = this.authenticationManager.authenticate(usernamePassword);
@@ -73,14 +73,17 @@ public class AuthenticationController {
                     @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
             }
     )
-    public ResponseEntity<SignUpResponseDTO> signup(@RequestBody @Valid RegisterDTO data) {
+    public ResponseEntity<SignUpResponseDTO> signup(@RequestBody @Valid SignUpRequestDTO data) {
         logger.info("Receive request to sign-up.");
         if (this.repository.findByLogin(data.login()) != null) return ResponseEntity.badRequest().build();
+
         String encryptedPassword = new BCryptPasswordEncoder().encode(data.password()); // Encrypts the password
         User newUser = new User(data); // Create a user with unencrypted password
         newUser.setPassword(encryptedPassword); // Set the password as encrypted password
-        this.repository.save(newUser); // Persist in user in DB
+        this.repository.save(newUser); // Persist user in DB
+
+        SignUpResponseDTO signUpResponseDTO = new SignUpResponseDTO(newUser);
         logger.info("Request to sign-up processed successfully.");
-        return ResponseEntity.ok().build(); //TODO: return a Signup response dto
+        return ResponseEntity.ok(signUpResponseDTO);
     }
 }
