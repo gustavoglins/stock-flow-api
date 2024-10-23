@@ -35,12 +35,6 @@
     </properties>
     <dependencies>
 
-        <!-- Dependency for Spring Email -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-mail</artifactId>
-        </dependency>
-
         <!-- Dependency for Spring Security -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -90,6 +84,14 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+
+        <!-- Dependency for Spring DevTools -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <version>3.3.4</version>
+        </dependency>
+
 
         <!-- Dependency for Postgresql -->
         <dependency>
