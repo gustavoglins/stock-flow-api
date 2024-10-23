@@ -38,7 +38,7 @@ public class User implements UserDetails, Serializable {
     public User() {
     }
 
-    public User(RegisterDTO data){
+    public User(RegisterDTO data) {
         this.login = data.login();
         this.password = data.password();
         this.role = data.role();
@@ -80,7 +80,8 @@ public class User implements UserDetails, Serializable {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        if(this.role == UserRole.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_COMMON"));
+        if (this.role == UserRole.ADMIN)
+            return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_COMMON"));
         else return List.of(new SimpleGrantedAuthority("ROLE_COMMON"));
     }
 
