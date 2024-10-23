@@ -1,8 +1,8 @@
 package com.stockflow.controllers;
 
 import com.stockflow.dto.userDtos.SignInRequestDTO;
-import com.stockflow.dto.userDtos.SignUpRequestDTO;
 import com.stockflow.dto.userDtos.SignInResponseDTO;
+import com.stockflow.dto.userDtos.SignUpRequestDTO;
 import com.stockflow.dto.userDtos.SignUpResponseDTO;
 import com.stockflow.model.user.User;
 import com.stockflow.repositories.UserRepository;
@@ -54,9 +54,11 @@ public class AuthenticationController {
     )
     public ResponseEntity<SignInResponseDTO> signin(@RequestBody @Valid SignInRequestDTO data) {
         logger.info("Receive request to sign-in.");
-        var usernamePassword = new UsernamePasswordAuthenticationToken(data.login(), data.password());
-        var auth = this.authenticationManager.authenticate(usernamePassword);
-        var token = tokenService.generateToken((User) auth.getPrincipal());
+
+        var usernamePassword = new UsernamePasswordAuthenticationToken(data.login(), data.password()); // Gen the UsernamePass
+        var auth = this.authenticationManager.authenticate(usernamePassword); // Validate given UsernamePass
+        var token = tokenService.generateToken((User) auth.getPrincipal()); // Gen token from UsernamePass
+
         logger.info("Request to sign-in processed successfully.");
         return ResponseEntity.ok(new SignInResponseDTO(token));
     }
@@ -75,6 +77,7 @@ public class AuthenticationController {
     )
     public ResponseEntity<SignUpResponseDTO> signup(@RequestBody @Valid SignUpRequestDTO data) {
         logger.info("Receive request to sign-up.");
+
         if (this.repository.findByLogin(data.login()) != null) return ResponseEntity.badRequest().build();
 
         String encryptedPassword = new BCryptPasswordEncoder().encode(data.password()); // Encrypts the password
