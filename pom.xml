@@ -46,7 +46,6 @@
             <version>${jwt.version}</version>
         </dependency>
 
-
         <!-- Dependency for Spring Doc UI -->
         <dependency>
             <groupId>org.springdoc</groupId>

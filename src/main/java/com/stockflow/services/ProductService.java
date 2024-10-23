@@ -1,6 +1,6 @@
 package com.stockflow.services;
 
-import com.stockflow.dto.ProductDTO;
+import com.stockflow.dto.productDtos.ProductDTO;
 
 import java.util.List;
 

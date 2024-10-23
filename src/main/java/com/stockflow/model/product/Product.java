@@ -1,6 +1,6 @@
 package com.stockflow.model.product;
 
-import com.stockflow.dto.ProductDTO;
+import com.stockflow.dto.productDtos.ProductDTO;
 import jakarta.persistence.*;
 
 import java.util.Objects;

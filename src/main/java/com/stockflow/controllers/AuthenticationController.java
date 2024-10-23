@@ -1,8 +1,8 @@
 package com.stockflow.controllers;
 
-import com.stockflow.dto.AuthenticationDTO;
-import com.stockflow.dto.RegisterDTO;
-import com.stockflow.dto.SignInResponseDTO;
+import com.stockflow.dto.userDtos.AuthenticationDTO;
+import com.stockflow.dto.userDtos.RegisterDTO;
+import com.stockflow.dto.userDtos.SignInResponseDTO;
 import com.stockflow.model.user.User;
 import com.stockflow.repositories.UserRepository;
 import com.stockflow.security.TokenService;

@@ -1,4 +1,4 @@
-package com.stockflow.dto;
+package com.stockflow.dto.productDtos;
 
 import com.stockflow.model.product.Product;
 import jakarta.validation.constraints.Min;

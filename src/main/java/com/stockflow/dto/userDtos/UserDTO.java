@@ -1,4 +1,4 @@
-package com.stockflow.dto;
+package com.stockflow.dto.userDtos;
 
 import com.stockflow.model.user.User;
 import com.stockflow.model.user.UserRole;

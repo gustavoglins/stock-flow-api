@@ -1,6 +1,6 @@
 package com.stockflow.services;
 
-import com.stockflow.dto.UserDTO;
+import com.stockflow.dto.userDtos.UserDTO;
 import com.stockflow.exceptions.UserNotFoundException;
 import com.stockflow.model.user.User;
 import com.stockflow.repositories.UserRepository;

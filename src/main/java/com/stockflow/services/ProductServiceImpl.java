@@ -1,6 +1,6 @@
 package com.stockflow.services;
 
-import com.stockflow.dto.ProductDTO;
+import com.stockflow.dto.productDtos.ProductDTO;
 import com.stockflow.exceptions.ProductNotFoundException;
 import com.stockflow.model.product.Product;
 import com.stockflow.repositories.ProductRepository;

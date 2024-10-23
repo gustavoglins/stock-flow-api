@@ -1,6 +1,6 @@
 package com.stockflow.services;
 
-import com.stockflow.dto.UserDTO;
+import com.stockflow.dto.userDtos.UserDTO;
 
 import java.util.List;
 import java.util.UUID;

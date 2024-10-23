@@ -1,7 +1,7 @@
 package com.stockflow.model.user;
 
-import com.stockflow.dto.RegisterDTO;
-import com.stockflow.dto.UserDTO;
+import com.stockflow.dto.userDtos.RegisterDTO;
+import com.stockflow.dto.userDtos.UserDTO;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

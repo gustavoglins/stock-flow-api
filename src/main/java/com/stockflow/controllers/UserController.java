@@ -1,6 +1,6 @@
 package com.stockflow.controllers;
 
-import com.stockflow.dto.UserDTO;
+import com.stockflow.dto.userDtos.UserDTO;
 import com.stockflow.services.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
