@@ -3,11 +3,18 @@ package com.stockflow.controllers;
 import com.stockflow.dto.userDtos.AuthenticationDTO;
 import com.stockflow.dto.userDtos.RegisterDTO;
 import com.stockflow.dto.userDtos.SignInResponseDTO;
+import com.stockflow.dto.userDtos.SignUpResponseDTO;
 import com.stockflow.model.user.User;
 import com.stockflow.repositories.UserRepository;
 import com.stockflow.security.TokenService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,37 +26,61 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/auth")
+@Tag(name = "Authentication Management", description = "Endpoints for managing user authentication, including login, registration, password management, and token handling.")
 public class AuthenticationController {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    private static final Logger logger = LoggerFactory.getLogger(AuthenticationController.class);
+    private final AuthenticationManager authenticationManager;
+    private final UserRepository repository;
+    private final TokenService tokenService;
 
-    @Autowired
-    private UserRepository repository;
-
-    @Autowired
-    private TokenService tokenService;
+    public AuthenticationController(AuthenticationManager authenticationManager, UserRepository repository, TokenService tokenService) {
+        this.authenticationManager = authenticationManager;
+        this.repository = repository;
+        this.tokenService = tokenService;
+    }
 
     @PostMapping("/signin")
-    public ResponseEntity<SignInResponseDTO> signin(@RequestBody @Valid AuthenticationDTO data){
+    @Operation(
+            summary = "Authenticate a user",
+            description = "Authenticate a user by validating login credentials and returning a JWT token upon successful authentication.",
+            tags = {"Authentication"},
+            responses = {
+                    @ApiResponse(description = "OK", responseCode = "200", content = @Content(schema = @Schema(implementation = SignInResponseDTO.class))),
+                    @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
+                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
+                    @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
+            }
+    )
+    public ResponseEntity<SignInResponseDTO> signin(@RequestBody @Valid AuthenticationDTO data) {
+        logger.info("Receive request to sign-in.");
         var usernamePassword = new UsernamePasswordAuthenticationToken(data.login(), data.password());
         var auth = this.authenticationManager.authenticate(usernamePassword);
-
         var token = tokenService.generateToken((User) auth.getPrincipal());
-
+        logger.info("Request to sign-in processed successfully.");
         return ResponseEntity.ok(new SignInResponseDTO(token));
     }
 
     @PostMapping("/signup")
-    public ResponseEntity signup(@RequestBody @Valid RegisterDTO data){
-        if(this.repository.findByLogin(data.login()) != null) return ResponseEntity.badRequest().build();
-
+    @Operation(
+            summary = "Register a new user",
+            description = "Register a new user by validating the input data and saving the encrypted password in the database.",
+            tags = {"Authentication"},
+            responses = {
+                    @ApiResponse(description = "OK", responseCode = "200", content = @Content),
+                    @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
+                    @ApiResponse(description = "Conflict", responseCode = "409", content = @Content),
+                    @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
+            }
+    )
+    public ResponseEntity<SignUpResponseDTO> signup(@RequestBody @Valid RegisterDTO data) {
+        logger.info("Receive request to sign-up.");
+        if (this.repository.findByLogin(data.login()) != null) return ResponseEntity.badRequest().build();
         String encryptedPassword = new BCryptPasswordEncoder().encode(data.password()); // Encrypts the password
-
         User newUser = new User(data); // Create a user with unencrypted password
         newUser.setPassword(encryptedPassword); // Set the password as encrypted password
-
         this.repository.save(newUser); // Persist in user in DB
-        return ResponseEntity.ok().build();
+        logger.info("Request to sign-up processed successfully.");
+        return ResponseEntity.ok().build(); //TODO: return a Signup response dto
     }
 }
