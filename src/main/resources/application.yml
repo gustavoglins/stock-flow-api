@@ -2,7 +2,8 @@ api:
   security:
     token:
       secret: "${JWT_SECRET:my-secret-key}"
-
+cors:
+  originPatterns: http://localhost:3000,http://localhost:8080,https://gustavoglins.com
 spring:
   application:
     name: StockFlowAPI
@@ -15,7 +16,6 @@ spring:
       ddl-auto: update
     show-sql: false
     open-in-view: true
-
 springdoc:
   api-docs:
     path: /v3/api-docs
@@ -23,7 +23,6 @@ springdoc:
   swagger-ui:
     path: /swagger-ui.html
     enabled: true
-
 logging:
   level:
     org.springframework.web.servlet.resource: ERROR
