@@ -35,6 +35,12 @@
     </properties>
     <dependencies>
 
+        <!-- Dependency for Spring Hateoas -->
+        <dependency>
+            <groupId>org.springframework.hateoas</groupId>
+            <artifactId>spring-hateoas</artifactId>
+        </dependency>
+
         <!-- Dependency for Spring Security -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
