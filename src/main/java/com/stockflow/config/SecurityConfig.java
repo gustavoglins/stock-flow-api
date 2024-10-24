@@ -37,8 +37,8 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers( // Endpoints available to any user
-                                "/v3/api-docs/**",
-                                "/swagger-ui/**",
+                                "/api-docs/**",
+                                "/api-docs-ui/**",
                                 "/api/auth/signin"
                         ).permitAll()
                         .requestMatchers( // Endpoints available to common users
