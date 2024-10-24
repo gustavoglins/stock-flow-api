@@ -13,7 +13,7 @@ import java.io.Serializable;
 import java.util.UUID;
 
 @JsonPropertyOrder({"id", "login", "password", "role", "links"})
-public record UserDTO(
+public record UserRequestDTO(
 
         @JsonProperty("id")
         UUID id,
@@ -36,7 +36,7 @@ public record UserDTO(
     @Serial
     private static final long serialVersionUID = 1L;
 
-    public UserDTO(User user) {
+    public UserRequestDTO(User user) {
         this(user.getId(), user.getLogin(), user.getPassword(), user.getRole(), user.getLinks());
     }
 }
