@@ -3,6 +3,7 @@ package com.stockflow.model.user;
 import com.stockflow.dto.userDtos.SignUpRequestDTO;
 import com.stockflow.dto.userDtos.UserDTO;
 import jakarta.persistence.*;
+import org.springframework.hateoas.RepresentationModel;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,7 +17,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "tb_user")
-public class User implements UserDetails, Serializable {
+public class User extends RepresentationModel<User> implements UserDetails, Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;

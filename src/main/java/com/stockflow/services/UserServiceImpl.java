@@ -1,5 +1,6 @@
 package com.stockflow.services;
 
+import com.stockflow.controllers.UserController;
 import com.stockflow.dto.userDtos.UserDTO;
 import com.stockflow.exceptions.UserNotFoundException;
 import com.stockflow.model.user.User;
@@ -13,6 +14,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -28,13 +32,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO create(UserDTO userDTO) {
-        logger.info("Creating a new user with login: {}", userDTO.login());
+        logger.info("Creating a new newUser with login: {}", userDTO.login());
         String encryptedPassword = passwordEncoder.encode(userDTO.password());
 
-        User user = new User(userDTO);
-        user.setPassword(encryptedPassword);
+        User newUser = new User(userDTO);
+        newUser.setPassword(encryptedPassword);
 
-        UserDTO createdUser = new UserDTO(repository.save(user));
+        newUser.add(linkTo(methodOn(UserController.class).create(userDTO)).withSelfRel()); // Adding link hateoas
+
+        UserDTO createdUser = new UserDTO(repository.save(newUser));
         logger.info("User created successfully with ID: {}", createdUser.id());
 
         return createdUser;
@@ -46,14 +52,16 @@ public class UserServiceImpl implements UserService {
         Optional<User> optionalUser = repository.findById(userDTO.id());
 
         if (optionalUser.isPresent()) {
-            User retrievedUser = optionalUser.get();
-            logger.debug("User found for update: {}", retrievedUser);
+            User foundUser = optionalUser.get();
+            logger.debug("User found for update: {}", foundUser);
 
-            retrievedUser.setLogin(userDTO.login());
-            retrievedUser.setPassword(userDTO.password());
-            retrievedUser.setRole(userDTO.role());
+            foundUser.setLogin(userDTO.login());
+            foundUser.setPassword(userDTO.password());
+            foundUser.setRole(userDTO.role());
 
-            UserDTO updatedUser = new UserDTO(repository.save(retrievedUser));
+            foundUser.add(linkTo(methodOn(UserController.class).update(userDTO)).withSelfRel()); // Adding link hateoas
+
+            UserDTO updatedUser = new UserDTO(repository.save(foundUser));
             logger.info("User with ID: {} updated successfully.", updatedUser.id());
             return updatedUser;
         } else {
@@ -68,8 +76,12 @@ public class UserServiceImpl implements UserService {
         Optional<User> optionalUser = repository.findById(id);
 
         if (optionalUser.isPresent()) {
-            logger.info("User with ID: {} found successfully.", id);
-            return new UserDTO(optionalUser.get());
+            User foundUser = optionalUser.get();
+
+            foundUser.add(linkTo(methodOn(UserController.class).findById(foundUser.getId())).withSelfRel()); // Adding link hateoas
+
+            logger.info("User with ID: {} found successfully.", foundUser.getId());
+            return new UserDTO(foundUser);
         } else {
             logger.error("User with ID: {} not found.", id);
             throw new UserNotFoundException("User with ID: " + id + " not found.");
@@ -80,6 +92,9 @@ public class UserServiceImpl implements UserService {
     public List<UserDTO> listAll() {
         logger.info("Listing all registered users.");
         List<User> userList = repository.findAll();
+
+        userList.forEach(user -> user.add(linkTo(methodOn(UserController.class).listAll()).withSelfRel())); // Adding link hateoas
+
         logger.info("Total users found: {}.", userList.size());
         return userList.stream()
                 .map(UserDTO::new)
