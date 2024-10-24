@@ -20,9 +20,7 @@ public record UserRequestDTO(
         String password,
 
         @NotNull(message = "User role cannot be empty")
-        UserRole role,
-
-        Links links) implements Serializable {
+        UserRole role) implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
