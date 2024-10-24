@@ -1,7 +1,6 @@
 package com.stockflow.config;
 
 import com.stockflow.security.SecurityFilter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,8 +17,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Autowired
-    private SecurityFilter securityFilter;
+    private final SecurityFilter securityFilter;
+
+    public SecurityConfig(SecurityFilter securityFilter) {
+        this.securityFilter = securityFilter;
+    }
 
     // Method to create and return an instance of AuthenticationManager, used to validate the user's credentials during the sign-in process
     @Bean
@@ -34,16 +36,16 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(
+                        .requestMatchers( // Endpoints available to any user
                                 "/v3/api-docs/**",
                                 "/swagger-ui/**",
-                                "/auth/signin"
+                                "/api/auth/signin"
                         ).permitAll()
-                        .requestMatchers(
-                                "/auth/signup",
+                        .requestMatchers( // Endpoints available to common users
+                                "/api/auth/signup",
                                 "/api/user"
                         ).hasRole("ADMIN")
-                        .requestMatchers(
+                        .requestMatchers( // Endpoints available only to admin users
                                 "/api/product"
                         ).hasRole("COMMON")
                         .anyRequest().authenticated()

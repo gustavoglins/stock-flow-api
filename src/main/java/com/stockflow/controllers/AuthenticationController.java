@@ -41,7 +41,7 @@ public class AuthenticationController {
     @Operation(
             summary = "Authenticate a user",
             description = "Authenticate a user by validating login credentials and returning a JWT token upon successful authentication.",
-            tags = {"Authentication"},
+            tags = {"Authentication Management"},
             responses = {
                     @ApiResponse(description = "OK", responseCode = "200", content = @Content(schema = @Schema(implementation = SignInResponseDTO.class))),
                     @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
@@ -64,7 +64,7 @@ public class AuthenticationController {
     @Operation(
             summary = "Register a new user",
             description = "Register a new user by validating the input data and saving the encrypted password in the database.",
-            tags = {"Authentication"},
+            tags = {"Authentication Management"},
             responses = {
                     @ApiResponse(description = "OK", responseCode = "200", content = @Content),
                     @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
