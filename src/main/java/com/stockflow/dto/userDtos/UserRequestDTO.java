@@ -3,7 +3,6 @@ package com.stockflow.dto.userDtos;
 import com.stockflow.model.user.UserRole;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import org.springframework.hateoas.Links;
 
 import java.io.Serial;
 import java.io.Serializable;
