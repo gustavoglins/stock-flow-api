@@ -30,8 +30,4 @@ public record ProductRequestDTO(
 
     @Serial
     private static final long serialVersionUID = 1L;
-
-    public ProductRequestDTO(Product product) {
-        this(product.getId(), product.getName(), product.getDescription(), product.getPrice(), product.getQuantity(), product.getLinks());
-    }
 }
