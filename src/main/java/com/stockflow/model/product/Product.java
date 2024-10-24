@@ -1,6 +1,6 @@
 package com.stockflow.model.product;
 
-import com.stockflow.dto.productDtos.ProductDTO;
+import com.stockflow.dto.productDtos.ProductRequestDTO;
 import jakarta.persistence.*;
 import org.springframework.hateoas.RepresentationModel;
 
@@ -34,11 +34,11 @@ public class Product extends RepresentationModel<Product> implements Serializabl
     public Product() {
     }
 
-    public Product(ProductDTO productDTO) {
-        this.name = productDTO.name();
-        this.description = productDTO.description();
-        this.price = productDTO.price();
-        this.quantity = productDTO.quantity();
+    public Product(ProductRequestDTO productRequestDTO) {
+        this.name = productRequestDTO.name();
+        this.description = productRequestDTO.description();
+        this.price = productRequestDTO.price();
+        this.quantity = productRequestDTO.quantity();
     }
 
     public Long getId() {

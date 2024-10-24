@@ -1,6 +1,7 @@
 package com.stockflow.controllers;
 
-import com.stockflow.dto.productDtos.ProductDTO;
+import com.stockflow.dto.productDtos.ProductRequestDTO;
+import com.stockflow.dto.productDtos.ProductResponseDTO;
 import com.stockflow.services.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -37,16 +38,16 @@ public class ProductController {
             description = "Create a new product",
             tags = {"Product"},
             responses = {
-                    @ApiResponse(description = "Created", responseCode = "201", content = @Content(schema = @Schema(implementation = ProductDTO.class))),
+                    @ApiResponse(description = "Created", responseCode = "201", content = @Content(schema = @Schema(implementation = ProductRequestDTO.class))),
                     @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
                     @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content()),
                     @ApiResponse(description = "Conflict", responseCode = "409", content = @Content()),
                     @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content())
             }
     )
-    public ResponseEntity<ProductDTO> create(@RequestBody @Valid ProductDTO productDTO) {
+    public ResponseEntity<ProductResponseDTO> create(@RequestBody @Valid ProductRequestDTO productRequestDTO) {
         logger.info("Received request to create a new product.");
-        ProductDTO createdProduct = service.create(productDTO);
+        ProductResponseDTO createdProduct = service.create(productRequestDTO);
         logger.info("Request to create a new product processed successfully.");
         return ResponseEntity.status(HttpStatus.CREATED).body(createdProduct);
     }
@@ -57,7 +58,7 @@ public class ProductController {
             description = "Update a product",
             tags = {"Product"},
             responses = {
-                    @ApiResponse(description = "Ok", responseCode = "200", content = @Content(schema = @Schema(implementation = ProductDTO.class))),
+                    @ApiResponse(description = "Ok", responseCode = "200", content = @Content(schema = @Schema(implementation = ProductRequestDTO.class))),
                     @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content()),
                     @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content()),
                     @ApiResponse(description = "Not Found", responseCode = "404", content = @Content()),
@@ -65,10 +66,10 @@ public class ProductController {
                     @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content()),
             }
     )
-    public ResponseEntity<ProductDTO> update(@RequestBody @Valid ProductDTO productDTO) {
+    public ResponseEntity<ProductResponseDTO> update(@RequestBody @Valid ProductRequestDTO productRequestDTO) {
         logger.info("Received request to update a product.");
-        ProductDTO updatedProduct = service.update(productDTO);
-        logger.info("Request to update product with ID: {} processed successfully.", productDTO.id());
+        ProductResponseDTO updatedProduct = service.update(productRequestDTO);
+        logger.info("Request to update product with ID: {} processed successfully.", productRequestDTO.id());
         return ResponseEntity.ok(updatedProduct);
     }
 
@@ -78,16 +79,16 @@ public class ProductController {
             description = "Find a product by ID",
             tags = {"Product"},
             responses = {
-                    @ApiResponse(description = "Ok", responseCode = "200", content = @Content(schema = @Schema(implementation = ProductDTO.class))),
+                    @ApiResponse(description = "Ok", responseCode = "200", content = @Content(schema = @Schema(implementation = ProductRequestDTO.class))),
                     @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content()),
                     @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content()),
                     @ApiResponse(description = "Not Found", responseCode = "404", content = @Content()),
                     @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content()),
             }
     )
-    public ResponseEntity<ProductDTO> findById(@PathVariable("id") @Parameter(description = "The ID of the product to be found.") Long id) {
+    public ResponseEntity<ProductResponseDTO> findById(@PathVariable("id") @Parameter(description = "The ID of the product to be found.") Long id) {
         logger.info("Received request to find product by id.");
-        ProductDTO foundProduct = service.findById(id);
+        ProductResponseDTO foundProduct = service.findById(id);
         logger.info("Request to find product with ID: {} processed successfully.", id);
         return ResponseEntity.ok(foundProduct);
     }
@@ -101,18 +102,18 @@ public class ProductController {
                     @ApiResponse(description = "Ok", responseCode = "200",
                             content = @Content(
                                     mediaType = "application/json",
-                                    array = @ArraySchema(schema = @Schema(implementation = ProductDTO.class))
+                                    array = @ArraySchema(schema = @Schema(implementation = ProductRequestDTO.class))
                             )
                     ),
                     @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content()),
                     @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content()),
             }
     )
-    public ResponseEntity<List<ProductDTO>> listAll() {
+    public ResponseEntity<List<ProductResponseDTO>> listAll() {
         logger.info("Received request to list all products registered.");
-        List<ProductDTO> productDTOList = service.listAll();
-        logger.info("Request to list all products processed successfully. Total products: {}", productDTOList.size());
-        return ResponseEntity.ok(productDTOList);
+        List<ProductResponseDTO> productRequestDTOList = service.listAll();
+        logger.info("Request to list all products processed successfully. Total products: {}", productRequestDTOList.size());
+        return ResponseEntity.ok(productRequestDTOList);
     }
 
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)

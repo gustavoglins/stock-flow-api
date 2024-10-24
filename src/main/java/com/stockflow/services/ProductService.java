@@ -1,18 +1,19 @@
 package com.stockflow.services;
 
-import com.stockflow.dto.productDtos.ProductDTO;
+import com.stockflow.dto.productDtos.ProductRequestDTO;
+import com.stockflow.dto.productDtos.ProductResponseDTO;
 
 import java.util.List;
 
 public interface ProductService {
 
-    ProductDTO create(ProductDTO productDTO);
+    ProductResponseDTO create(ProductRequestDTO productRequestDTO);
 
-    ProductDTO update(ProductDTO productDTO);
+    ProductResponseDTO update(ProductRequestDTO productRequestDTO);
 
-    ProductDTO findById(Long id);
+    ProductResponseDTO findById(Long id);
 
-    List<ProductDTO> listAll();
+    List<ProductResponseDTO> listAll();
 
     void delete(Long id);
 }
