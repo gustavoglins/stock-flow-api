@@ -98,13 +98,19 @@
             <version>3.3.4</version>
         </dependency>
 
-
         <!-- Dependency for Postgresql -->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
         </dependency>
+
+        <!-- Dependency for Jackson Dataformat XML -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-xml</artifactId>
+        </dependency>
+
 
 
         <!-- Dependency for Spring tests -->
