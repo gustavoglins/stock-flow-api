@@ -2,12 +2,18 @@ package com.stockflow.model.product;
 
 import com.stockflow.dto.productDtos.ProductDTO;
 import jakarta.persistence.*;
+import org.springframework.hateoas.RepresentationModel;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
 @Table(name = "tb_product")
-public class Product {
+public class Product extends RepresentationModel<Product> implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
