@@ -45,12 +45,6 @@ public class User extends RepresentationModel<User> implements UserDetails, Seri
         this.role = data.role();
     }
 
-    public User(UserRequestDTO userRequestDTO) {
-        this.login = userRequestDTO.login();
-        this.password = userRequestDTO.password();
-        this.role = userRequestDTO.role();
-    }
-
     public UUID getId() {
         return id;
     }
