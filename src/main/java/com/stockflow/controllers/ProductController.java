@@ -3,6 +3,7 @@ package com.stockflow.controllers;
 import com.stockflow.dto.productDtos.ProductRequestDTO;
 import com.stockflow.dto.productDtos.ProductResponseDTO;
 import com.stockflow.services.ProductService;
+import com.stockflow.util.CustomMediaType;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -14,7 +15,6 @@ import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,8 +32,8 @@ public class ProductController {
         this.service = service;
     }
 
-    @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
-                 produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    @PostMapping(consumes = {CustomMediaType.APPLICATION_JSON, CustomMediaType.APPLICATION_XML, CustomMediaType.APPLICATION_YAML},
+                 produces = {CustomMediaType.APPLICATION_JSON, CustomMediaType.APPLICATION_XML, CustomMediaType.APPLICATION_YAML})
     @Operation(
             summary = "Create a new product",
             description = "Create a new product",
@@ -53,8 +53,8 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdProduct);
     }
 
-    @PutMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
-                produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    @PutMapping(consumes = {CustomMediaType.APPLICATION_JSON, CustomMediaType.APPLICATION_XML, CustomMediaType.APPLICATION_YAML},
+                produces = {CustomMediaType.APPLICATION_JSON, CustomMediaType.APPLICATION_XML, CustomMediaType.APPLICATION_YAML})
     @Operation(
             summary = "Update a product",
             description = "Update a product",
@@ -75,7 +75,7 @@ public class ProductController {
         return ResponseEntity.ok(updatedProduct);
     }
 
-    @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    @GetMapping(value = "/{id}", produces = {CustomMediaType.APPLICATION_JSON, CustomMediaType.APPLICATION_XML, CustomMediaType.APPLICATION_YAML})
     @Operation(
             summary = "Find a product by ID",
             description = "Find a product by ID",
@@ -95,7 +95,7 @@ public class ProductController {
         return ResponseEntity.ok(foundProduct);
     }
 
-    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    @GetMapping(produces = {CustomMediaType.APPLICATION_JSON, CustomMediaType.APPLICATION_XML, CustomMediaType.APPLICATION_YAML})
     @Operation(
             summary = "List all products registered",
             description = "List all products registered",
@@ -118,7 +118,7 @@ public class ProductController {
         return ResponseEntity.ok(productRequestDTOList);
     }
 
-    @DeleteMapping(value = "/{id}", produces = MediaType.TEXT_PLAIN_VALUE)
+    @DeleteMapping(value = "/{id}", produces = CustomMediaType.TEXT_PLAIN)
     @Operation(
             summary = "Delete a product by ID",
             description = "Delete a product by ID",

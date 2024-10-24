@@ -7,6 +7,7 @@ import com.stockflow.dto.userDtos.SignUpResponseDTO;
 import com.stockflow.model.user.User;
 import com.stockflow.repositories.UserRepository;
 import com.stockflow.security.TokenService;
+import com.stockflow.util.CustomMediaType;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -37,7 +38,9 @@ public class AuthenticationController {
         this.tokenService = tokenService;
     }
 
-    @PostMapping("/signin")
+    @PostMapping(value = "/signin",
+                 consumes = {CustomMediaType.APPLICATION_JSON, CustomMediaType.APPLICATION_XML, CustomMediaType.APPLICATION_YAML},
+                 produces = {CustomMediaType.APPLICATION_JSON, CustomMediaType.APPLICATION_XML, CustomMediaType.APPLICATION_YAML})
     @Operation(
             summary = "Authenticate a user",
             description = "Authenticate a user by validating login credentials and returning a JWT token upon successful authentication.",
@@ -60,7 +63,9 @@ public class AuthenticationController {
         return ResponseEntity.ok(new SignInResponseDTO(token));
     }
 
-    @PostMapping("/signup")
+    @PostMapping(value = "/signup",
+                 consumes = {CustomMediaType.APPLICATION_JSON, CustomMediaType.APPLICATION_XML, CustomMediaType.APPLICATION_YAML},
+                 produces = {CustomMediaType.APPLICATION_JSON, CustomMediaType.APPLICATION_XML, CustomMediaType.APPLICATION_YAML})
     @Operation(
             summary = "Register a new user",
             description = "Register a new user by validating the input data and saving the encrypted password in the database.",

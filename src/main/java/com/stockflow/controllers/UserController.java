@@ -3,6 +3,7 @@ package com.stockflow.controllers;
 import com.stockflow.dto.userDtos.UserRequestDTO;
 import com.stockflow.dto.userDtos.UserResponseDTO;
 import com.stockflow.services.UserService;
+import com.stockflow.util.CustomMediaType;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -14,7 +15,6 @@ import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,8 +33,8 @@ public class UserController {
         this.service = service;
     }
 
-    @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
-                 produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    @PostMapping(consumes = {CustomMediaType.APPLICATION_JSON, CustomMediaType.APPLICATION_XML, CustomMediaType.APPLICATION_YAML},
+                 produces = {CustomMediaType.APPLICATION_JSON, CustomMediaType.APPLICATION_XML, CustomMediaType.APPLICATION_YAML})
     @Operation(
             summary = "Create a new user",
             description = "Create a new User",
@@ -54,8 +54,8 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
     }
 
-    @PutMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
-                produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    @PutMapping(consumes = {CustomMediaType.APPLICATION_JSON, CustomMediaType.APPLICATION_XML, CustomMediaType.APPLICATION_YAML},
+                produces = {CustomMediaType.APPLICATION_JSON, CustomMediaType.APPLICATION_XML, CustomMediaType.APPLICATION_YAML})
     @Operation(
             summary = "Update an user",
             description = "Update an user",
@@ -76,7 +76,7 @@ public class UserController {
         return ResponseEntity.ok(updatedUser);
     }
 
-    @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    @GetMapping(value = "/{id}", produces = {CustomMediaType.APPLICATION_JSON, CustomMediaType.APPLICATION_XML, CustomMediaType.APPLICATION_YAML})
     @Operation(
             summary = "Find an user by ID",
             description = "Find an user by ID",
@@ -96,7 +96,7 @@ public class UserController {
         return ResponseEntity.ok(foundUser);
     }
 
-    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    @GetMapping(produces = {CustomMediaType.APPLICATION_JSON, CustomMediaType.APPLICATION_XML, CustomMediaType.APPLICATION_YAML})
     @Operation(
             summary = "List all users registered",
             description = "List all users registered",
@@ -119,7 +119,7 @@ public class UserController {
         return ResponseEntity.ok(userRequestDTOList);
     }
 
-    @DeleteMapping(value = "/{id}", produces = MediaType.TEXT_PLAIN_VALUE)
+    @DeleteMapping(value = "/{id}", produces = CustomMediaType.TEXT_PLAIN)
     @Operation(
             summary = "Delete an user by ID",
             description = "Delete an user by ID",
