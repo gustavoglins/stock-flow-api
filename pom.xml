@@ -111,7 +111,13 @@
             <artifactId>jackson-dataformat-xml</artifactId>
         </dependency>
 
+        <!-- Dependency for Jackson Dataformat YAML -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-yaml</artifactId>
+        </dependency>
 
+        <!-- Tests Dependencies -->
 
         <!-- Dependency for Spring tests -->
         <dependency>
