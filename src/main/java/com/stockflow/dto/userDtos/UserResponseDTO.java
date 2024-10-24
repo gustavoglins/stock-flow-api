@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.stockflow.model.user.User;
 import com.stockflow.model.user.UserRole;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import org.springframework.hateoas.Links;
 
 import java.io.Serial;
@@ -19,11 +17,9 @@ public record UserResponseDTO(
         UUID id,
 
         @JsonProperty("login")
-        @NotBlank(message = "User login cannot be blank or empty")
         String login,
 
         @JsonProperty("role")
-        @NotNull(message = "User role cannot be empty")
         UserRole role,
 
         @JsonProperty("links")
