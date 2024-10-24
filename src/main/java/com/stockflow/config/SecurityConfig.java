@@ -41,11 +41,11 @@ public class SecurityConfig {
                                 "/api-docs-ui/**",
                                 "/api/auth/signin"
                         ).permitAll()
-                        .requestMatchers( // Endpoints available to common users
+                        .requestMatchers( // Endpoints available to admin users
                                 "/api/auth/signup",
                                 "/api/user"
                         ).hasRole("ADMIN")
-                        .requestMatchers( // Endpoints available only to admin users
+                        .requestMatchers( // Endpoints available only to common users
                                 "/api/product"
                         ).hasRole("COMMON")
                         .anyRequest().authenticated()
