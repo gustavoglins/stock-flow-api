@@ -1,19 +1,20 @@
 package com.stockflow.services;
 
-import com.stockflow.dto.userDtos.UserDTO;
+import com.stockflow.dto.userDtos.UserRequestDTO;
+import com.stockflow.dto.userDtos.UserResponseDTO;
 
 import java.util.List;
 import java.util.UUID;
 
 public interface UserService {
 
-    UserDTO create(UserDTO userDTO);
+    UserResponseDTO create(UserRequestDTO userRequestDTO);
 
-    UserDTO update(UserDTO userDTO);
+    UserResponseDTO update(UserRequestDTO userRequestDTO);
 
-    UserDTO findById(UUID id);
+    UserResponseDTO findById(UUID id);
 
-    List<UserDTO> listAll();
+    List<UserResponseDTO> listAll();
 
     void delete(UUID id);
 }

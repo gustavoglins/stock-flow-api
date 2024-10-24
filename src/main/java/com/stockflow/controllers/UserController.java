@@ -1,6 +1,7 @@
 package com.stockflow.controllers;
 
-import com.stockflow.dto.userDtos.UserDTO;
+import com.stockflow.dto.userDtos.UserRequestDTO;
+import com.stockflow.dto.userDtos.UserResponseDTO;
 import com.stockflow.services.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -38,16 +39,16 @@ public class UserController {
             description = "Create a new User",
             tags = {"User"},
             responses = {
-                    @ApiResponse(description = "Created", responseCode = "201", content = @Content(schema = @Schema(implementation = UserDTO.class))),
+                    @ApiResponse(description = "Created", responseCode = "201", content = @Content(schema = @Schema(implementation = UserRequestDTO.class))),
                     @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content()),
                     @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content()),
                     @ApiResponse(description = "Conflict", responseCode = "409", content = @Content()),
                     @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content())
             }
     )
-    public ResponseEntity<UserDTO> create(@RequestBody @Valid UserDTO userDTO) {
+    public ResponseEntity<UserResponseDTO> create(@RequestBody @Valid UserRequestDTO userRequestDTO) {
         logger.info("Received request to create a new user.");
-        UserDTO createdUser = service.create(userDTO);
+        UserResponseDTO createdUser = service.create(userRequestDTO);
         logger.info("Request to create a new user processed successfully.");
         return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
     }
@@ -58,7 +59,7 @@ public class UserController {
             description = "Update an user",
             tags = {"User"},
             responses = {
-                    @ApiResponse(description = "Ok", responseCode = "200", content = @Content(schema = @Schema(implementation = UserDTO.class))),
+                    @ApiResponse(description = "Ok", responseCode = "200", content = @Content(schema = @Schema(implementation = UserRequestDTO.class))),
                     @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content()),
                     @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content()),
                     @ApiResponse(description = "Not Found", responseCode = "404", content = @Content()),
@@ -66,10 +67,10 @@ public class UserController {
                     @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content()),
             }
     )
-    public ResponseEntity<UserDTO> update(@RequestBody @Valid UserDTO userDTO) {
-        logger.info("Receive request to update an user with ID: {}.", userDTO.id());
-        UserDTO updatedUser = service.update(userDTO);
-        logger.info("Request to update user with ID: {} processed successfully.", userDTO.id());
+    public ResponseEntity<UserResponseDTO> update(@RequestBody @Valid UserRequestDTO userRequestDTO) {
+        logger.info("Receive request to update an user with ID: {}.", userRequestDTO.id());
+        UserResponseDTO updatedUser = service.update(userRequestDTO);
+        logger.info("Request to update user with ID: {} processed successfully.", userRequestDTO.id());
         return ResponseEntity.ok(updatedUser);
     }
 
@@ -79,16 +80,16 @@ public class UserController {
             description = "Find an user by ID",
             tags = {"User"},
             responses = {
-                    @ApiResponse(description = "Ok", responseCode = "200", content = @Content(schema = @Schema(implementation = UserDTO.class))),
+                    @ApiResponse(description = "Ok", responseCode = "200", content = @Content(schema = @Schema(implementation = UserRequestDTO.class))),
                     @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content()),
                     @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content()),
                     @ApiResponse(description = "Not Found", responseCode = "404", content = @Content()),
                     @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content()),
             }
     )
-    public ResponseEntity<UserDTO> findById(@PathVariable @Parameter(description = "The ID of the product to be found.") UUID id) {
+    public ResponseEntity<UserResponseDTO> findById(@PathVariable @Parameter(description = "The ID of the product to be found.") UUID id) {
         logger.info("Receive request to find an user with ID: {}.", id);
-        UserDTO foundUser = service.findById(id);
+        UserResponseDTO foundUser = service.findById(id);
         logger.info("Request to find user with ID: {} processed successfully.", id);
         return ResponseEntity.ok(foundUser);
     }
@@ -102,18 +103,18 @@ public class UserController {
                     @ApiResponse(description = "Ok", responseCode = "200",
                             content = @Content(
                                     mediaType = "application/json",
-                                    array = @ArraySchema(schema = @Schema(implementation = UserDTO.class))
+                                    array = @ArraySchema(schema = @Schema(implementation = UserRequestDTO.class))
                             )
                     ),
                     @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content()),
                     @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content()),
             }
     )
-    public ResponseEntity<List<UserDTO>> listAll() {
+    public ResponseEntity<List<UserResponseDTO>> listAll() {
         logger.info("Receive request to list all users registered.");
-        List<UserDTO> userDTOList = service.listAll();
-        logger.info("Request to list all users processed successfully. Total users returned: {}.", userDTOList.size());
-        return ResponseEntity.ok(userDTOList);
+        List<UserResponseDTO> userRequestDTOList = service.listAll();
+        logger.info("Request to list all users processed successfully. Total users returned: {}.", userRequestDTOList.size());
+        return ResponseEntity.ok(userRequestDTOList);
     }
 
     @DeleteMapping(value = "/{id}", produces = MediaType.TEXT_PLAIN_VALUE)

@@ -1,7 +1,8 @@
 package com.stockflow.services;
 
 import com.stockflow.controllers.UserController;
-import com.stockflow.dto.userDtos.UserDTO;
+import com.stockflow.dto.userDtos.UserRequestDTO;
+import com.stockflow.dto.userDtos.UserResponseDTO;
 import com.stockflow.exceptions.UserNotFoundException;
 import com.stockflow.model.user.User;
 import com.stockflow.repositories.UserRepository;
@@ -31,47 +32,47 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO create(UserDTO userDTO) {
-        logger.info("Creating a new newUser with login: {}", userDTO.login());
-        String encryptedPassword = passwordEncoder.encode(userDTO.password());
+    public UserResponseDTO create(UserRequestDTO userRequestDTO) {
+        logger.info("Creating a new newUser with login: {}", userRequestDTO.login());
+        String encryptedPassword = passwordEncoder.encode(userRequestDTO.password());
 
-        User newUser = new User(userDTO);
+        User newUser = new User(userRequestDTO);
         newUser.setPassword(encryptedPassword);
 
-        newUser.add(linkTo(methodOn(UserController.class).create(userDTO)).withSelfRel()); // Adding link hateoas
+        newUser.add(linkTo(methodOn(UserController.class).create(userRequestDTO)).withSelfRel()); // Adding link hateoas
 
-        UserDTO createdUser = new UserDTO(repository.save(newUser));
+        UserResponseDTO createdUser = new UserResponseDTO(repository.save(newUser));
         logger.info("User created successfully with ID: {}", createdUser.id());
 
         return createdUser;
     }
 
     @Override
-    public UserDTO update(UserDTO userDTO) {
-        logger.info("Updating user with ID: {}.", userDTO.id());
-        Optional<User> optionalUser = repository.findById(userDTO.id());
+    public UserResponseDTO update(UserRequestDTO userRequestDTO) {
+        logger.info("Updating user with ID: {}.", userRequestDTO.id());
+        Optional<User> optionalUser = repository.findById(userRequestDTO.id());
 
         if (optionalUser.isPresent()) {
             User foundUser = optionalUser.get();
             logger.debug("User found for update: {}", foundUser);
 
-            foundUser.setLogin(userDTO.login());
-            foundUser.setPassword(userDTO.password());
-            foundUser.setRole(userDTO.role());
+            foundUser.setLogin(userRequestDTO.login());
+            foundUser.setPassword(userRequestDTO.password());
+            foundUser.setRole(userRequestDTO.role());
 
-            foundUser.add(linkTo(methodOn(UserController.class).update(userDTO)).withSelfRel()); // Adding link hateoas
+            foundUser.add(linkTo(methodOn(UserController.class).update(userRequestDTO)).withSelfRel()); // Adding link hateoas
 
-            UserDTO updatedUser = new UserDTO(repository.save(foundUser));
+            UserResponseDTO updatedUser = new UserResponseDTO(repository.save(foundUser));
             logger.info("User with ID: {} updated successfully.", updatedUser.id());
             return updatedUser;
         } else {
-            logger.error("User with ID: {} not found for update.", userDTO.id());
-            throw new UserNotFoundException("User with ID: " + userDTO.id() + " not found.");
+            logger.error("User with ID: {} not found for update.", userRequestDTO.id());
+            throw new UserNotFoundException("User with ID: " + userRequestDTO.id() + " not found.");
         }
     }
 
     @Override
-    public UserDTO findById(UUID id) {
+    public UserResponseDTO findById(UUID id) {
         logger.info("Searching for user with ID: {}", id);
         Optional<User> optionalUser = repository.findById(id);
 
@@ -81,7 +82,7 @@ public class UserServiceImpl implements UserService {
             foundUser.add(linkTo(methodOn(UserController.class).findById(foundUser.getId())).withSelfRel()); // Adding link hateoas
 
             logger.info("User with ID: {} found successfully.", foundUser.getId());
-            return new UserDTO(foundUser);
+            return new UserResponseDTO(foundUser);
         } else {
             logger.error("User with ID: {} not found.", id);
             throw new UserNotFoundException("User with ID: " + id + " not found.");
@@ -89,7 +90,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDTO> listAll() {
+    public List<UserResponseDTO> listAll() {
         logger.info("Listing all registered users.");
         List<User> userList = repository.findAll();
 
@@ -97,7 +98,7 @@ public class UserServiceImpl implements UserService {
 
         logger.info("Total users found: {}.", userList.size());
         return userList.stream()
-                .map(UserDTO::new)
+                .map(UserResponseDTO::new)
                 .collect(Collectors.toList());
     }
 

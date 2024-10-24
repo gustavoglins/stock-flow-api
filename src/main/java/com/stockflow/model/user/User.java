@@ -1,7 +1,7 @@
 package com.stockflow.model.user;
 
 import com.stockflow.dto.userDtos.SignUpRequestDTO;
-import com.stockflow.dto.userDtos.UserDTO;
+import com.stockflow.dto.userDtos.UserRequestDTO;
 import jakarta.persistence.*;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.security.core.GrantedAuthority;
@@ -45,10 +45,10 @@ public class User extends RepresentationModel<User> implements UserDetails, Seri
         this.role = data.role();
     }
 
-    public User(UserDTO userDTO) {
-        this.login = userDTO.login();
-        this.password = userDTO.password();
-        this.role = userDTO.role();
+    public User(UserRequestDTO userRequestDTO) {
+        this.login = userRequestDTO.login();
+        this.password = userRequestDTO.password();
+        this.role = userRequestDTO.role();
     }
 
     public UUID getId() {
