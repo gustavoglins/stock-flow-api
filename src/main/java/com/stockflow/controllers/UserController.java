@@ -37,7 +37,7 @@ public class UserController {
     @Operation(
             summary = "Create a new user",
             description = "Create a new User",
-            tags = {"User"},
+            tags = {"User Management"},
             responses = {
                     @ApiResponse(description = "Created", responseCode = "201", content = @Content(schema = @Schema(implementation = UserRequestDTO.class))),
                     @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content()),
@@ -57,7 +57,7 @@ public class UserController {
     @Operation(
             summary = "Update an user",
             description = "Update an user",
-            tags = {"User"},
+            tags = {"User Management"},
             responses = {
                     @ApiResponse(description = "Ok", responseCode = "200", content = @Content(schema = @Schema(implementation = UserRequestDTO.class))),
                     @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content()),
@@ -78,7 +78,7 @@ public class UserController {
     @Operation(
             summary = "Find an user by ID",
             description = "Find an user by ID",
-            tags = {"User"},
+            tags = {"User Management"},
             responses = {
                     @ApiResponse(description = "Ok", responseCode = "200", content = @Content(schema = @Schema(implementation = UserRequestDTO.class))),
                     @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content()),
@@ -98,7 +98,7 @@ public class UserController {
     @Operation(
             summary = "List all users registered",
             description = "List all users registered",
-            tags = {"User"},
+            tags = {"User Management"},
             responses = {
                     @ApiResponse(description = "Ok", responseCode = "200",
                             content = @Content(
@@ -121,7 +121,7 @@ public class UserController {
     @Operation(
             summary = "Delete an user by ID",
             description = "Delete an user by ID",
-            tags = {"User"},
+            tags = {"User Management"},
             responses = {
                     @ApiResponse(description = "Ok", responseCode = "200", content = @Content(
                             mediaType = "text/plain"

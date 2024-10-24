@@ -36,7 +36,7 @@ public class ProductController {
     @Operation(
             summary = "Create a new product",
             description = "Create a new product",
-            tags = {"Product"},
+            tags = {"Product Management"},
             responses = {
                     @ApiResponse(description = "Created", responseCode = "201", content = @Content(schema = @Schema(implementation = ProductRequestDTO.class))),
                     @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
@@ -56,7 +56,7 @@ public class ProductController {
     @Operation(
             summary = "Update a product",
             description = "Update a product",
-            tags = {"Product"},
+            tags = {"Product Management"},
             responses = {
                     @ApiResponse(description = "Ok", responseCode = "200", content = @Content(schema = @Schema(implementation = ProductRequestDTO.class))),
                     @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content()),
@@ -77,7 +77,7 @@ public class ProductController {
     @Operation(
             summary = "Find a product by ID",
             description = "Find a product by ID",
-            tags = {"Product"},
+            tags = {"Product Management"},
             responses = {
                     @ApiResponse(description = "Ok", responseCode = "200", content = @Content(schema = @Schema(implementation = ProductRequestDTO.class))),
                     @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content()),
@@ -97,7 +97,7 @@ public class ProductController {
     @Operation(
             summary = "List all products registered",
             description = "List all products registered",
-            tags = {"Product"},
+            tags = {"Product Management"},
             responses = {
                     @ApiResponse(description = "Ok", responseCode = "200",
                             content = @Content(
@@ -120,7 +120,7 @@ public class ProductController {
     @Operation(
             summary = "Delete a product by ID",
             description = "Delete a product by ID",
-            tags = {"Product"},
+            tags = {"Product Management"},
             responses = {
                     @ApiResponse(description = "Ok", responseCode = "200", content = @Content(
                             mediaType = "text/plain"
