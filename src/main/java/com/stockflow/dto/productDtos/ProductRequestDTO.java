@@ -9,7 +9,7 @@ import org.springframework.hateoas.Links;
 import java.io.Serial;
 import java.io.Serializable;
 
-public record ProductDTO(
+public record ProductRequestDTO(
 
         Long id,
 
@@ -31,7 +31,7 @@ public record ProductDTO(
     @Serial
     private static final long serialVersionUID = 1L;
 
-    public ProductDTO(Product product) {
+    public ProductRequestDTO(Product product) {
         this(product.getId(), product.getName(), product.getDescription(), product.getPrice(), product.getQuantity(), product.getLinks());
     }
 }
